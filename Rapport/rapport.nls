@@ -1,0 +1,14 @@
+\begin{thenomenclature} 
+
+ \nomgroup{A}
+
+  \item [{A/C}]\begingroup Air Condition\nomeqref {0}\nompageref{1}
+  \item [{CPU}]\begingroup Central Processing Unit\nomeqref {0}
+		\nompageref{1}
+  \item [{I/O}]\begingroup Input/Output\nomeqref {0}\nompageref{1}
+  \item [{PCB}]\begingroup Printed Circuit Board\nomeqref {0}
+		\nompageref{1}
+  \item [{UPS}]\begingroup Uninterruptible power supply\nomeqref {0}
+		\nompageref{1}
+
+\end{thenomenclature}

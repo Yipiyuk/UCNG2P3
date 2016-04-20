@@ -1,0 +1,43 @@
+\section{Calculation of the price}
+Based on the prices of the different components, a total price and calculation can be presented.\newline
+The product consists of the following parts:
+\begin{enumerate}
+	\item[•]Main board
+	\item[•]Power supply
+	\item[•]Enclosure
+	\item[•]Production man hours
+	\item[•]Unit test
+\end{enumerate}
+The production cost is estimated that the controller will take ~100 hours to develop and construct, and after then another ~50 hours for testing the system.\newline
+For the development hours it will cost \~350 kr per hour and \~250 kr,- per hour for the testing of the system. This results in the following pricing:
+$$(R\&Dprice*hours)+(testprice*hours)=cost$$
+Which result in the following:
+$$(350 kr*100)+(250 kr*50)=47500kr$$
+An important factor for the controller is the sensor scalability, and in this system the controller is capable of communicating with a large amount sensors before needed another controller.\newline
+For the calculation of a price for a complete system, a fictive server room will form the base for the setup of the calculation.
+The server room that will be used will be set up the following way:
+\img{figures/server_room_1.png}{The server room setup}{serverRoomSetup}{1}\newline
+\newpage
+For a server room with this size and setup the following figure displays the optimal sensor placements:\newline
+\img{figures/server_room_2.png}{Figures showing optimal sensor placement}{sensorplacement}{1}
+\newline
+This setup will be at the price of:\newline
+\begin{table}[h]
+\centering
+
+\begin{tabular}{lllll}
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Sensors}}           & \multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Unit price}} & \multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Number of Units}} & \cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Total} &                               \\ \cline{1-4}
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Water}}             & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}\$255}                             & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}4}                                      & \cellcolor[HTML]{FFFFFF}\$1020                       &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Temperature}}       & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}\$55}                              & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}6}                                      & \cellcolor[HTML]{D2EAF1}\$330                        &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Humidity}}          & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}\$105}                             & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}2}                                      & \cellcolor[HTML]{FFFFFF}\$210                        &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Power consumption}} & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}\$85}                              & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}6}                                      & \cellcolor[HTML]{D2EAF1}\$510                        &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Room Access}}       & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}\$25}                              & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}1}                                      & \cellcolor[HTML]{FFFFFF}\$25                         &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Vibration}}         & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}\$101}                             & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}1}                                      & \cellcolor[HTML]{D2EAF1}\$101                        &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Video}}             & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}\$349}                             & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}3}                                      & \cellcolor[HTML]{FFFFFF}\$1047                       &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Smoke}}             & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}\$75}                              & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}1}                                      & \cellcolor[HTML]{D2EAF1}\$75                         &                               \\
+\multicolumn{1}{l|}{\cellcolor[HTML]{4BACC6}{\color[HTML]{FFFFFF} Controller}}        & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}\$500}                             & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFFFF}1}                                      & \cellcolor[HTML]{FFFFFF}\$500                        &                               \\
+                                                                                      &                                                                                &                                                                                     & \multicolumn{1}{l|}{\cellcolor[HTML]{D2EAF1}\$3818}  & \cellcolor[HTML]{D2EAF1}Total
+\end{tabular}
+\caption{Calculation of the price}
+\label{setupPrice}
+\end{table}

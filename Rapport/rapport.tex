@@ -1,0 +1,62 @@
+%implementing document formatting:
+\input{settings/preamble.tex}
+\input{settings/commands.tex}
+\begin{document}
+\input{lists/glossary.tex}
+\renewcommand\chaptername{Chapter}
+\renewcommand\contentsname{Table of Contents}
+\renewcommand\figurename{Figure}
+\renewcommand\tablename{Table} 
+
+%implementing front page:
+\input{contents/formalities/frontpage.tex}
+%clears one or two pages to make the document start on right hand side:
+\cleardoublepage
+
+%numbers the pages with Roman numeral - starts from "i":
+\frontmatter
+
+%implementing title sheet:
+\input{contents/formalities/titleSheet.tex}
+\input{contents/formalities/preface.tex}
+
+\cleardoublepage
+
+%the '*' allows the tableofcontents be excepted from the actual table of contents.
+\tableofcontents*
+\newpage
+\printnomenclature
+\renewcommand*\listfigurename{List of Figures}
+\renewcommand*\listtablename{List of Tables}
+
+%numbers the pages with Arabic numeral - starts from 1.
+\mainmatter
+
+\chapter{Requirements specification}
+\input{contents/reqspec.tex}
+\chapter{Hardware section}
+\input{contents/hardware/hardwarespec.tex}
+\input{contents/hardware/hardwaredesc.tex}
+\input{contents/hardware/partconclusion.tex}
+\chapter{Software section}
+\input{contents/software/softwarespec.tex}
+\input{contents/software/softwaredesc.tex}
+\input{contents/software/partconclusion.tex}
+\chapter{Test}
+\input{contents/test/test.tex}
+\chapter{Conclusion}
+\input{contents/conclussion.tex}
+\chapter{Appendices}
+\input{contents/appendices/groupcollab.tex}
+\chapter{List of references}
+\input{contents/LOR.tex}
+\newpage
+\listoffigures
+\addtocontents{lof}{~\hfill\textbf{Page}\par}
+\newpage
+\listoftables
+\addtocontents{lot}{~\hfill\textbf{Page}\par}
+\newpage
+\printbibliography
+
+\end{document}
