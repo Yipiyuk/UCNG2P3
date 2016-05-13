@@ -42,4 +42,21 @@ Even though the process seems simple, with only three variables, it can be chall
 
 If the parameters of the PID controller is set incorrectly the process input can become unstable.
 This means the controllers output becomes divergent, this can be limited by saturation and mechanical breaking.
+
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+\centering
+\caption{Manual tuning}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+{\color[HTML]{000000} Parameter}                     & Rise time    & Overshoot & Settling time & Steady-state error  & Stability              \\ \hline
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{000000} $K_p$} & Decrease     & Increase  & Small change  & Decrease            & Degrade                \\ \hline
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{000000} $K_i$} & Decrease     & Increase  & Increase      & Eliminate           & Degrade                \\ \hline
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{000000} $K_d$} & Minor change & Decrease  & Decrease      & \begin{tabular}[c]{@{}l@{}}No effect\\ in theory\end{tabular} & \begin{tabular}[c]{@{}l@{}}Improves if\\ $K_d$ is small\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
 %Derivative action is seldom used in practice though - by one estimate in only 25$\%$ of deployed controllers  because of its variable impact on system stability in real world applications.
