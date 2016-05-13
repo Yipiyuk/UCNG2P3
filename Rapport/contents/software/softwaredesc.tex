@@ -41,7 +41,11 @@ Even though the process seems simple, with only three variables, it can be chall
 \subsubsection {Stability} 
 
 If the parameters of the PID controller is set incorrectly the process input can become unstable.
-This means the controllers output becomes divergent, this can be limited by saturation and mechanical breaking.
+This means the controllers output becomes divergent, TBD this can be limited by saturation and mechanical breaking. \\
+\subsubsection {Manual tuning} 
+TBD omskrives/omformuleres \\
+If the system must remain online, one tuning method is to first set $K_i$ and $K_d$ values to zero. Increase the $K_p$ until the output of the loop oscillates, then the $K_p$ should be set to approximately half of that value for a "quarter amplitude decay" type response.\\ Then increase $K_i$ until any offset is corrected in sufficient time for the process. However, too much $K_i$ will cause instability. Finally, increase $K_d$, if required, until the loop is acceptably quick to reach its reference after a load disturbance. However, too much $K_d$ will cause excessive response and overshoot.\\ 
+A fast PID loop tuning usually overshoots slightly to reach the setpoint more quickly; however, some systems cannot accept overshoot, in which case an over-damped closed-loop system is required, which will require a $K_p$ setting significantly less than half that of the $K_p$ setting that was causing oscillation.
 
 % Please add the following required packages to your document preamble:
 % \usepackage[table,xcdraw]{xcolor}
@@ -49,7 +53,7 @@ This means the controllers output becomes divergent, this can be limited by satu
 \begin{table}[]
 \centering
 \caption{Manual tuning}
-\label{my-label}
+\label{Table: Manual tuning}
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 \rowcolor[HTML]{C0C0C0} 
