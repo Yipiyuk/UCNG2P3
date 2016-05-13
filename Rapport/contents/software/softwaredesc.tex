@@ -32,5 +32,14 @@ $$D_{\mathrm{out}}=K_d\frac{de(t)}{dt}$$
 The derivative action predicts system behaviour and utilizes this to improve the settling time and stability of the system.
 An ideal derivative is not causal, so that implementations of PID controllers include an additional low pass filtering for the derivative term, to limit the high frequency gain and noise.
 
+TBD billede PID
+\subsubsection {Loop tuning} 
 
+Tuning the loop is the term used to describe the adjustments of the PID’s control parameters (proportional band/gain, integral gain/reset, derivative gain/rate) to the optimal values for the given control scheme. \\ Stability is the first requirement; however systems can differ greatly, and different applications may have different requirements and these may even conflict with each other. For example, high speed and high accuracy often cancel each other out, because high speed may cause overshooting, while high accuracy is slow.\\ The ideal realistic behaviour is both as fast as possible, while also having minimum overshoot and oscillation. \\ 
+
+Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In our case, we used manual tuning of the numbers.
+\subsubsection {Stability} 
+
+If the parameters of the PID controller is set incorrectly the process input can become unstable.
+This means the controllers output becomes divergent, this can be limited by saturation and mechanical breaking.
 %Derivative action is seldom used in practice though - by one estimate in only 25$\%$ of deployed controllers  because of its variable impact on system stability in real world applications.
