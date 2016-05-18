@@ -2,13 +2,13 @@
 
  \nomgroup{A}
 
-  \item [{A/C}]\begingroup Air Condition\nomeqref {0}\nompageref{1}
-  \item [{CPU}]\begingroup Central Processing Unit\nomeqref {0}
+  \item [{ADC}]\begingroup Analog-digital conversion\nomeqref {0}\nompageref{1}
+  \item [{PID}]\begingroup Proportional-integral-derivative controller\nomeqref {0}
 		\nompageref{1}
-  \item [{I/O}]\begingroup Input/Output\nomeqref {0}\nompageref{1}
-  \item [{PCB}]\begingroup Printed Circuit Board\nomeqref {0}
+  \item [{}]\begingroup \nomeqref {0}\nompageref{1}
+  \item [{}]\begingroup \nomeqref {0}
 		\nompageref{1}
-  \item [{UPS}]\begingroup Uninterruptible power supply\nomeqref {0}
+  \item [{}]\begingroup \nomeqref {0}
 		\nompageref{1}
 
 \end{thenomenclature}
