@@ -1,5 +1,7 @@
 \section{Description of the hardware structure and functionality}
+In the following section the hardware functions will be introduced and described.
 \subsection{Selection of sensor}
+
 \begin{table}[htbp]
     \begin{tabular}{|l|l|l|l|}
         \hline
@@ -11,9 +13,11 @@
         Notes               & ~                              & ~        & ~         \\
         \hline
     \end{tabular}
-    \caption{Table of a selection of sensors}
-\label{sensor_tabel}
+    \caption{Table of a selection of sensors.}
+\label{sensor_table}
 \end{table}
+
+
 TBD Beskriv sensorer og hvorfor vi har valgt denne
 \newline
 \subsection{OPB704 Sensor}
@@ -26,11 +30,12 @@ struktur og funktion samt alle underdele
 
 \subsection{Analog-to-digital converter (ADC)}
 
-The purpose of the ADC is to convert the analog data from the sensors to digital data that can be manipulated by a computer - this allows data received from the bluetooth transmitter on the robot to be processed into readable data more easily, this is great for showing how the sensors are reacting to the environment. The sensors themselves cannot discern what they actually need to read, the sensors just read anything they can see and send that signal. \\
+The purpose of the ADC is to convert the analog data from the sensors to digital data that can be manipulated by a computer - this allows data received from the bluetooth transmitter on the product to be processed into readable data more easily, this is great for showing how the sensors are reacting to the environment. The sensors themselves cannot discern what they actually need to read, the sensors just read anything they can see and send that signal. \\
 Analog signals can have a significant amount of noise - since any received noise is interpreted as part of the signal, so a digital signal is not only more easy to work with, it will also have less chaotic frequencies. This will make for more accurate readings on the tachometer on the robot, which allows even more finely tuned monitoring of the robot and its working processes. \\
 
 \subsection{ADC diagram} 
 TBD
 
-\subsubsection{Our take on the ADC}
+\subsubsection{This products usage of ADC}
+
 TBD
