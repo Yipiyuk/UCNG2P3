@@ -6,7 +6,7 @@ TBD Softwarebeskrivelse og underafsnit
 \subsection {Description of the PID controller} 
  
 A PID controller continuously calculates an error value as the difference to a reference point and a measured process variable.\\
-PID is an abbreviation for a proportional-integral-derivative controller, it is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line and the PID will power up the engines to steer accordingly to said reference point.
+PID is an abbreviation for a proportional-integral-derivative controller, it is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line to follow and the PID will allow the MCU to adjust the power to the engines, to steer accordingly to said reference point.
 $$\mathrm{F}(t)=K_p{e(t)} + K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} + K_{d}\frac{de(t)}{dt}$$
 
 \begin{figure}[h!]
@@ -20,7 +20,7 @@ $$\mathrm{F}(t)=K_p{e(t)} + K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} + K_{d}\frac{de(
 
 \subsubsection {Proportional control(P)}
 
-The proportional term creates an output value that is proportionally related to the current error value, this value can be tuned by multiplying the error by a constant $K_p$. A high proportional gain results in a large change in the output for a given change in the error. 
+The proportional part creates an output value that is proportionally related to the current error value, this value can be tuned by multiplying the error by a constant $K_p$. A high proportional gain results in a large change in the output for a given change in the error. 
 
 
 $$ P_{\mathrm{out}}=K_p\,{e(t)}$$  
@@ -49,7 +49,7 @@ $$I_{\mathrm{out}}=K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau}$$
 
 
 
-The integral term accelerates the movement of the process towards the reference point.
+The integral part accelerates the movement of the process towards the reference point.
 Since the integral term correlates to accumulated errors from the past, it can cause the present value to overshoot the reference value.
 
 \subsubsection {Derivative control(D)} 
@@ -91,22 +91,19 @@ Even though the process seems simple, with only three variables, it can be chall
 \subsubsection {Stability} 
 
 If the parameters of the PID controller are set incorrectly the process input can become unstable.
-This means the controllers output becomes divergent, this can be limited by saturation and mechanical breaking. \\
+This means the controllers output becomes divergent, which can be limited by saturation and mechanical breaking. \\
 
 \subsubsection {Manual tuning} 
 
-When a system must be online at all times a method for tuning is, to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, setting $K_p$ at approximately half the value for a "quarter amplitude decay" type response.\\ %(TBD  kilde) (http://blog.opticontrols.com/archives/1066)
+When a system must be online at all times a method for tuning is to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, setting $K_p$ at approximately half the value for a "quarter amplitude decay" type response.\\ %(TBD  kilde) (http://blog.opticontrols.com/archives/1066)
 Then increase $K_i$ until any set off is corrected in sufficient time for the process. Adding too much $K_i$ will however cause an instability. 
 Finally, increase $K_d$, if required at all, until the loop is acceptably quick to reach its reference after a load disturbance.
 \\ 
-A fast PID loop tuning process usually overshoots slightly to reach the reference point faster. 
+A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ %Kan vi få en kilde på det?
 In the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
 
 TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
 \begin{table}[h]
 \centering
 \caption{Manual tuning}
