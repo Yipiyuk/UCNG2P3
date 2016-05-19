@@ -7,24 +7,61 @@ TBD Softwarebeskrivelse og underafsnit
 A PID controller continuously calculates an error value as the difference to a reference point and a measured process variable.\\
 PID is an abbreviation for a proportional-integral-derivative controller, it is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line and the PID will power up the engines to steer accordingly to said reference point.
 $$\mathrm{F}(t)=K_p{e(t)} + K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} + K_{d}\frac{de(t)}{dt}$$
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/PID_block.png}
+  
+  \caption{Block diagram, showing the idea of PID controller. Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:PID_en_updated_feedback.svg
+  }
+  \label{PID controller}
+\end{figure}
+
 \subsubsection {Proportional control(P)}
 
 The proportional term creates an output value that is proportionally related to the current error value, this value can be tuned by multiplying the error by a constant $K_p$. A high proportional gain results in a large change in the output for a given change in the error. 
 
+
 $$ P_{\mathrm{out}}=K_p\,{e(t)}$$  
 
 If the proportional gain is too high, the system can become unstable. Contrarily, a small gain will result in the device adjusting too slowly, which decreases overall efficiency and in the case of this project, it will end up being detrimental to the steering accuracy.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/PIDP.jpg}
+  
+  \caption{$K_p$ with 3 values. ($K_i$, $K_d$ held constant) Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:PID_varyingP.jpg
+  }
+  \label{PID controller}
+\end{figure}
+
+
 \subsubsection {Integral control(I)}
 
+
+
 The integral controller is contributing proportionally to both the magnitude of the error and the duration of the error. \\
-The integral in a PID controller is the sum of the instantaneous error over time and gives the accumulated offset that should have been corrected previously. \\
-The controller output equals the accumulated error multiplied by the integral gain(Ki)
-$$I_{\mathrm{out}}=K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} 	$$ 
+The integral in a PID controller is the sum of the instantaneous error over time and gives the accumulated offset that should have been corrected previously. \\ 
+
+The controller output equals the accumulated error multiplied by the integral gain(Ki)\\
+$$I_{\mathrm{out}}=K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau}$$ 
+
+
 
 The integral term accelerates the movement of the process towards the reference point.
 Since the integral term correlates to accumulated errors from the past, it can cause the present value to overshoot the reference value.
+
 \subsubsection {Derivative control(D)} 
+
 The derivative of the process error is calculated by determining the slope of the error over time and multiplying this rate of change by the derivative gain $K_d$. The magnitude of the contribution of the derivative term to the overall control action is termed the derivative gain, $K_d$.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/Change_with_Ki.png}
+  
+  \caption{$K_i$ shown with 3 values. Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:Change_with_Ki.png
+  }
+  \label{PID controller}
+\end{figure}
 
 The derivative term is given by:
 
@@ -32,16 +69,28 @@ $$D_{\mathrm{out}}=K_d\frac{de(t)}{dt}$$
 The derivative action predicts system behaviour and utilizes this to improve the settling time and stability of the system.
 An ideal derivative is not causal, so that implementations of PID controllers include an additional low pass filtering for the derivative term, to limit the high frequency gain and noise.
 
-TBD billede PID GRAF
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/Change_with_Kd.png}
+  
+  \caption{$K_d$ shown with 3 values. Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:Change_with_Kd.png
+  }
+  \label{PID controller}
+\end{figure}
+
+
+
 \subsubsection {Loop tuning} 
 
 Tuning the loop is the term used to describe the adjustments of the PID’s control parameters (proportional band/gain, integral gain/reset, derivative gain/rate) to the optimal values for the given control scheme. \\ Stability is the first requirement; however systems can differ greatly, and different applications may have different requirements and these may even conflict with each other. For example, high speed and high accuracy often cancel each other out, because high speed may cause overshooting, while high accuracy is slow.\\ The ideal realistic behaviour is both as fast as possible, while also having minimum overshoot and oscillation. \\ 
 
 Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In our case, we used manual tuning of the numbers.
+
 \subsubsection {Stability} 
 
 If the parameters of the PID controller are set incorrectly the process input can become unstable.
 This means the controllers output becomes divergent, this can be limited by saturation and mechanical breaking. \\
+
 \subsubsection {Manual tuning} 
 
 When a system must be online at all times a method for tuning is, to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, setting $K_p$ at approximately half the value for a "quarter amplitude decay" type response.\\ %(TBD  kilde) (http://blog.opticontrols.com/archives/1066)
@@ -56,7 +105,7 @@ TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 % Please add the following required packages to your document preamble:
 % \usepackage[table,xcdraw]{xcolor}
 % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
+\begin{table}[h]
 \centering
 \caption{Manual tuning}
 \label{Table: Manual tuning}
@@ -69,4 +118,12 @@ TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 \cellcolor[HTML]{C0C0C0}{\color[HTML]{000000} $K_d$} & Minor change & Decrease  & Decrease      & \begin{tabular}[c]{@{}l@{}}No effect\\ in theory\end{tabular} & \begin{tabular}[c]{@{}l@{}}Improves if\\ $K_d$ is small\end{tabular} \\ \hline
 \end{tabular}
 \end{table}
-%Derivative action is seldom used in practice though - by one estimate in only 25$\%$ of deployed controllers  because of its variable impact on system stability in real world applications.
+
+\subsubsection {Table 3.1 explained}
+
+Table 3.1 gives an informative overview of what the different parameters does when tuned manually.
+
+1. To decrease the rise time, use $K_p$ .\\
+2. To reduce the overshoot and settling time, use $K_d$ .\\
+3. To eliminate the steady-state error, use $K_i$ .\\
+ 
