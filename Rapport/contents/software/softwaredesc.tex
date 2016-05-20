@@ -3,7 +3,7 @@
 The following section will introduce the software segment, based on our required specifications. The design will shown in the form of a flowchart.
 TBD Softwarebeskrivelse og underafsnit
 
-\subsection {Description of the PID controller} 
+\section {Description of the PID controller} 
  
 A PID controller continuously calculates an error value as the difference to a reference point and a measured process variable.\\
 PID is an abbreviation for a proportional-integral-derivative controller, it is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line to follow and the PID will allow the MCU to adjust the power to the engines, to steer accordingly to said reference point.
@@ -18,7 +18,7 @@ $$\mathrm{F}(t)=K_p{e(t)} + K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} + K_{d}\frac{de(
   \label{PID controller}
 \end{figure}
 
-\subsubsection {Proportional control(P)}
+\subsection {Proportional control(P)}
 
 The proportional part creates an output value that is proportionally related to the current error value, this value can be tuned by multiplying the error by a constant $K_p$. A high proportional gain results in a large change in the output for a given change in the error. 
 
@@ -37,7 +37,7 @@ If the proportional gain is too high, the system can become unstable. Contrarily
 \end{figure}
 
 
-\subsubsection {Integral control(I)}
+\subsection {Integral control(I)}
 
 
 
@@ -52,7 +52,7 @@ $$I_{\mathrm{out}}=K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau}$$
 The integral part accelerates the movement of the process towards the reference point.
 Since the integral term correlates to accumulated errors from the past, it can cause the present value to overshoot the reference value.
 
-\subsubsection {Derivative control(D)} 
+\subsection {Derivative control(D)} 
 
 The derivative of the process error is calculated by determining the slope of the error over time and multiplying this rate of change by the derivative gain $K_d$. The magnitude of the contribution of the derivative term to the overall control action is termed the derivative gain, $K_d$.
 \begin{figure}[h!]
@@ -82,25 +82,26 @@ An ideal derivative is not causal, so that implementations of PID controllers in
 
 
 
-\subsubsection {Loop tuning} 
+\subsection {Loop tuning} 
 
 Tuning the loop is the term used to describe the adjustments of the PID’s control parameters (proportional band/gain, integral gain/reset, derivative gain/rate) to the optimal values for the given control scheme. \\ Stability is the first requirement; however systems can differ greatly, and different applications may have different requirements and these may even conflict with each other. For example, high speed and high accuracy often cancel each other out, because high speed may cause overshooting, while high accuracy is slow.\\ The ideal realistic behaviour is both as fast as possible, while also having minimum overshoot and oscillation. \\ 
 
 Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In our case, we used manual tuning of the numbers.
 
-\subsubsection {Stability} 
+\subsection {Stability} 
 
 If the parameters of the PID controller are set incorrectly the process input can become unstable.
 This means the controllers output becomes divergent, which can be limited by saturation and mechanical breaking. \\
 
-\subsubsection {Manual tuning} 
+\subsection {Manual tuning} 
 
-When a system must be online at all times a method for tuning is to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, setting $K_p$ at approximately half the value for a "quarter amplitude decay" type response.\\ %(TBD  kilde) (http://blog.opticontrols.com/archives/1066)
+When a system must be online at all times a method for tuning is to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, setting $K_p$ at approximately half the value for a "quarter amplitude decay" type response.\\ 
 Then increase $K_i$ until any set off is corrected in sufficient time for the process. Adding too much $K_i$ will however cause an instability. 
 Finally, increase $K_d$, if required at all, until the loop is acceptably quick to reach its reference after a load disturbance.
 \\ 
 A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ %Kan vi få en kilde på det?
 In the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
+\\TBD kilde (http://blog.opticontrols.com/archives/1066)
 
 TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 
@@ -125,4 +126,22 @@ Table 3.1 gives an informative overview of what the different parameters does wh
 1. To decrease the rise time, use $K_p$ .\\
 2. To reduce the overshoot and settling time, use $K_d$ .\\
 3. To eliminate the steady-state error, use $K_i$ .\\
+
+\section{Description of the Pulse Width Modulator - PWM}
+
+A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - in this projects case, this means the motors.\\
+The average voltage and amplitude given to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average is easily altered by changing how much of the time the state is set to on and how long it is set to off. The longer the switch is set to on compared to off, the higher the average supply will be.\\
+
+$$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\\
+ 
+ $$\overline{y}=\frac{1}{T}\left(\int_{0}^{DT}y_\mathrm{max}dt+\int_{DT}^{T}y_\mathrm{min}dt\right)$$
+ $$=\frac{1}{T}\left(D \cdot T \cdot y_\mathrm{max}+T(1-D)y_\mathrm{min}\right)$$
+ $$=D \cdot y_\mathrm{max}+\left(1-D\right)y_\mathrm{min}$$\\
+ 
+ TBD forklaring a ligninger
+
+\subsection{Duty cycles}
+ The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
+ TBD Vores duty cycle\\
+ 
  
