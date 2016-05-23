@@ -132,15 +132,18 @@ Table 3.1 gives an informative overview of what the different parameters does wh
 \section{Description of the Pulse Width Modulator - PWM}
 
 A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\
-The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average output is easily altered by changing the proportions between the on and off state. The longer the switch is set to on compared to off, the higher the average supply will be.\\
+The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average output is easily altered by changing the proportions between the on and off state. The longer the switch is set to on compared to off, the higher the average supply will be.\
+Pulse-width modulation utilizes a rectangular pulse where the width of the pulse is modulated to get the variation in the average value of the waveform.\ Given the pulse waveform $f(t)$ over the period $T$, low value $y_\mathrm{min}$ and high value $y_\mathrm{high}$ and duty cycle $D$, the average waveform is given by: 
 
-$$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\\
+$$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\
+
+This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \cdot y_\mathrm{max}$. From this it can be observed that the average value of the signal $(\overline{y})$ has a direct correlation with the duty cycle D. 
  
  $$\overline{y}=\frac{1}{T}\left(\int_{0}^{DT}y_\mathrm{max}dt+\int_{DT}^{T}y_\mathrm{min}dt\right)$$
  $$=\frac{1}{T}\left(D \cdot T \cdot y_\mathrm{max}+T(1-D)y_\mathrm{min}\right)$$
- $$=D \cdot y_\mathrm{max}+\left(1-D\right)y_\mathrm{min}$$\\
+ $$=D \cdot y_\mathrm{max}+\left(1-D\right)y_\mathrm{min}$$\
  
- TBD forklaring af ligninger
+This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \cdot y_\mathrm{max}$. From this it can be observed that the average value of the signal $(\overline{y})$ has a direct correlation with the duty cycle D. 
 
 \subsection{Duty cycles}
  The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
