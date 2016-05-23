@@ -38,8 +38,8 @@ If the proportional gain is too high, the system can become unstable. Contrarily
 \end{figure}
 
 \subsection {Steady-state error}
-TBD (omskrives)
-%Because a non-zero error is required to drive it, a proportional controller generally operates with a so-called steady-state error.[a] Steady-state error (SSE) is proportional to the process gain and inversely proportional to proportional gain. SSE may be mitigated by adding a compensating bias term to the setpoint or output, or corrected dynamically by adding an integral term.
+
+When looking at figure 3.2 the reference point is the blue line and the feedback line is the green, the two lines merge up and the steady-state is achieved. When the lines don't merge, but the feedback line is slightly above or under the reference point. This steady-state error can be minimized by adjusting the proportional and integral term. 
 
 \subsection {Integral control(I)}
 
@@ -64,7 +64,6 @@ The derivative of the process error is calculated by determining the slope of th
   \label{PID controller}
 \end{figure}
 
-TBD (billede skal rettes ind til teksten)
 The derivative term is given by:
 
 $$D_{\mathrm{out}}=K_d\frac{de(t)}{dt}$$
@@ -101,7 +100,7 @@ Finally, increase $K_d$, if required at all, until the loop is acceptably quick 
 \\ 
 A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ %Kan vi få en kilde på det?
 In the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
-\\TBD kilde (http://blog.opticontrols.com/archives/1066)
+\\ kilde (http://blog.opticontrols.com/archives/1066)
 
 TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 
@@ -131,8 +130,8 @@ Table 3.1 gives an informative overview of what the different parameters does wh
 
 \section{Description of the Pulse Width Modulator - PWM}
 
-A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\
-The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average output is easily altered by changing the proportions between the on and off state. The longer the switch is set to on compared to off, the higher the average supply will be.\\
+A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - in this projects case, this means the motors.\\
+The average voltage and amplitude given to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average is easily altered by changing how much of the time the state is set to on and how long it is set to off. The longer the switch is set to on compared to off, the higher the average supply will be.\\
 
 $$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\\
  
@@ -144,6 +143,6 @@ $$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\\
 
 \subsection{Duty cycles}
  The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
- TBD Vores duty cycle\\
+TBD Vores duty cycle\\
  
  
