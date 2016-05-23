@@ -27,6 +27,7 @@ $$ P_{\mathrm{out}}=K_p\,{e(t)}$$
 
 If the proportional gain is too high, the system can become unstable. Contrarily, a small gain will result in the device adjusting too slowly, which decreases overall efficiency and in the case of this project, it will end up being detrimental to the steering accuracy.
 
+
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.5\textwidth]{figures/PIDP.jpg}
@@ -36,18 +37,17 @@ If the proportional gain is too high, the system can become unstable. Contrarily
   \label{PID controller}
 \end{figure}
 
+\subsection {Steady-state error}
+TBD (omskrives)
+%Because a non-zero error is required to drive it, a proportional controller generally operates with a so-called steady-state error.[a] Steady-state error (SSE) is proportional to the process gain and inversely proportional to proportional gain. SSE may be mitigated by adding a compensating bias term to the setpoint or output, or corrected dynamically by adding an integral term.
 
 \subsection {Integral control(I)}
-
-
 
 The integral controller is contributing proportionally to both the magnitude of the error and the duration of the error. \\
 The integral in a PID controller is the sum of the instantaneous error over time and gives the accumulated offset that should have been corrected previously. \\ 
 
 The controller output equals the accumulated error multiplied by the integral gain(Ki)\\
 $$I_{\mathrm{out}}=K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau}$$ 
-
-
 
 The integral part accelerates the movement of the process towards the reference point.
 Since the integral term correlates to accumulated errors from the past, it can cause the present value to overshoot the reference value.
@@ -123,9 +123,11 @@ TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 
 Table 3.1 gives an informative overview of what the different parameters does when tuned manually.
 
-1. To decrease the rise time, use $K_p$ .\\
-2. To reduce the overshoot and settling time, use $K_d$ .\\
-3. To eliminate the steady-state error, use $K_i$ .\\
+\begin{enumerate}
+		\item[•]To minimize the rise time, decrease $K_p$
+		\item[•]To eliminate the steady-state error, increase $K_i$
+		\item[•]To reduce the overshoot and settling time, decrease $K_d$
+	\end{enumerate}
 
 \section{Description of the Pulse Width Modulator - PWM}
 
@@ -138,7 +140,7 @@ $$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\\
  $$=\frac{1}{T}\left(D \cdot T \cdot y_\mathrm{max}+T(1-D)y_\mathrm{min}\right)$$
  $$=D \cdot y_\mathrm{max}+\left(1-D\right)y_\mathrm{min}$$\\
  
- TBD forklaring a ligninger
+ TBD forklaring af ligninger
 
 \subsection{Duty cycles}
  The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
