@@ -1,6 +1,6 @@
 \section{Description of the software structure and functionality}
 
-The following section will introduce the software segment, based on our required specifications. The design will shown in the form of a flowchart.
+The following section will introduce the software segment, based on the required specifications. The design will shown in the form of a flowchart.
 TBD Softwarebeskrivelse og underafsnit
 
 \section {Description of the PID controller} 
@@ -85,7 +85,7 @@ An ideal derivative is not causal, so that implementations of PID controllers in
 
 Tuning the loop is the term used to describe the adjustments of the PID’s control parameters (proportional band/gain, integral gain/reset, derivative gain/rate) to the optimal values for the given control scheme. \\ Stability is the first requirement; however systems can differ greatly, and different applications may have different requirements and these may even conflict with each other. For example, high speed and high accuracy often cancel each other out, because high speed may cause overshooting, while high accuracy is slow.\\ The ideal realistic behaviour is both as fast as possible, while also having minimum overshoot and oscillation. \\ 
 
-Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In our case, we used manual tuning of the numbers.
+Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In this case, there was used manual tuning of the numbers.
 
 \subsection {Stability} 
 
