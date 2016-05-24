@@ -1,6 +1,6 @@
 \section{Description of the hardware structure and functionality}
 In the following section, the hardware parts and functions will be introduced and described.
-\subsection{Selection of sensor}
+\section{Selection of sensor}
 
 \begin{table}[htbp]
     \begin{tabular}{|l|l|l|l|}
@@ -28,7 +28,7 @@ TBD billede af sensor array?
 TBD Beskriv hardwarestruktur og funktion samt alle underdele
 
 
-\subsection{Analog-to-digital converter (ADC)}
+\section{Analog-to-digital converter (ADC)}
 
 The purpose of the ADC is to convert the analog data from the sensors to digital data that can be managed by a computer - this allows data received from the bluetooth transmitter on the product to be processed into readable data more easily, which is great for showing how the sensors are reacting. The sensors themselves cannot discern what they actually need to read, the sensors just read anything they can see and send that signal. \\
 Analog signals can have a significant amount of noise - since any received noise is interpreted as part of the signal, a digital signal is not only more easy to work with, it will also provide more precise data. This will make for more accurate readings on the tachometer on the robot, which allows even more finely tuned monitoring of the robot and its working processes. \\
@@ -39,3 +39,17 @@ TBD
 \subsubsection{This products usage of ADC}
 
 TBD
+
+\section{The Arduino Uno32 board}
+
+Our main computing core is at the Arduino Uno32 board. The board was selected both because of previous experiences, and because it met the set requirements perfectly - most importantly it has twelve analog imputs to handle our array of seven sensors. This board utilizes the PIC32MX320F128 microcontroller, which features a 32-bit processing core running at 80Mhz with 128K of flash program memory and 16K SRAM data memory. This board allowed the most important aspects of the project to become reality; namely a GUI showing both the ADC readings as well as visualizing the sensor imputs, plenty of analog inputs to allow for the sensor array, and BlueTooth transmission of data from the robot unto a computer.\newline
+The board is compatible for use with MPLAB IDE and the PICKit3 debugger.
+
+\section{The motor shield - PKA03}
+
+The motor shield was chosen because it is compatible with the Uno32 board, and fits perfectly within the scope of the project. It controls both motors and receives power from the 7.2 V lithium-ion battery pack mounted on the chassis itself. The motor shield is instrumental in providing motor controls to the product. To do this, it utilizes a specific electric circuit, called an h bridge.
+
+\subsection{The H bridge}
+
+An h bridge is a circuit that allows a voltage to be applied across a load in either direction. The purpose of this in the case of this project is to enable controls of the two motors in a way so that they can function individually, and both drive forwards and backwards.\\
+At first, there were experiments with custom prints and a purpose-built h bridge on the first iteration of the motor shield. However after testing, it proved faulty and was changed to accommodate time constraints.
