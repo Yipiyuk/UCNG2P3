@@ -1,5 +1,15 @@
 \section{Description of the hardware structure and functionality}
-In the following section, the hardware parts and functions will be introduced and described.
+In the following section, the hardware parts and functions will be introduced and described. The following part consists of sensor selection, ADC, uno32 board \& motor-shield.
+
+\section{Hardware diagram}
+The micro-controller is connected to the motor-shield and the motor-shield is then powering both motor 1 and motor 2. The sensor-array is sending the data collected to the micro-controller which then sends it further to the bluetooth unit. The bluetooth unit then writes the data to the terminal. 
+
+ \begin{figure}[!ht]
+    	\centering    		\includegraphics[width=.6\textwidth]{figures/hardwaredia2.png}
+    	\caption{\text{Block diagram showing the hardware.}}
+    	\label{Hardware diagram}
+    \end{figure}
+
 \section{Selection of sensor}
 
 \begin{table}[htbp]
@@ -16,34 +26,28 @@ In the following section, the hardware parts and functions will be introduced an
     \caption{Table of a selection of sensors.}
 \label{sensor_table}
 \end{table}
-The idea behind showing more sensors than the OPB 704, is to show the price difference and the utility from sensor to sensor. \emph{(fig 2.1)}
+The table is showing more sensors than the OPB 704, that is to show the price difference and the utility from sensor to sensor. \emph{(fig 2.1)}
 
 
 
 \subsection{OPB704 Sensor}
 The selected sensor for the line following robot will be the OPB704.\\
-This sensor has been chosen from a range of criteria, most important being the optimal sensor distance and the easier mounting method. This method makes it easier to add several sensors in an array, which will be done with a 3D-printed mount. 
+This sensor has been chosen from a range of criteria, most important being the optimal sensor distance and the easier mounting method. This method makes it more efficient to add several sensors in an array, which will be done with a 3D-printed mount. 
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.5\textwidth]{figures/sensorarray.jpg}
-  
-  \caption{3D printed mount}
-  \label{3D mount}
-\end{figure}
-TBD Beskriv hardwarestruktur og funktion samt alle underdele
+\sidebyimg{figures/opb704.jpg}{The sensor OPB 704}{figures/sensorarray.jpg}{3D printed sensor array module}
 
 
 \section{Analog-to-digital converter (ADC)}
 
-The purpose of the ADC is to convert the analog data from the sensors to digital data that can be managed by a computer - this allows data received from the blue-tooth transmitter on the product to be processed into readable data more easily, which is great for showing how the sensors are reacting. The sensors themselves cannot discern what they actually need to read, the sensors just read anything they can see and send that signal. \\
+The purpose of the ADC is to convert the analog data from the sensors to digital data that can be managed by a computer - this allows data received from the blue-tooth transmitter on the product to be processed into readable data more easily, which is great for showing how the sensors are reacting. The sensors themselves cannot discern what they actually need to read, the sensors just read anything they can see and send that signal.
+
 Analog signals can have a significant amount of noise - since any received noise is interpreted as part of the signal, a digital signal is not only more easy to work with, it will also provide more precise data. This will make for more accurate readings on the tachometer on the robot, which allows even more finely tuned monitoring of the robot and its working processes. \\
 
 \subsubsection{ADC diagram} 
 TBD? Er det relevant?
 
 \subsubsection{This products usage of ADC}
-
+Hvordan har vi gjort det i vores tilfælde?
 <<<<<<< HEAD
 TBD
 
@@ -54,11 +58,11 @@ The board is compatible for use with MPLAB IDE and the PICKit3 debugger.
 
 \section{The motor shield - PKA03}
 
-The motor shield was chosen because it is compatible with the Uno32 board, and fits perfectly within the scope of the project. It controls both motors and receives power from the 7.2 V lithium-ion battery pack mounted on the chassis itself. The motor shield is instrumental in providing motor controls to the product. To do this, it utilizes a specific electric circuit, called an h bridge.
+The motor shield was chosen because it is compatible with the Uno32 board, and fits perfectly within the scope of the project. It controls both motors and receives power from the 7.2 V lithium-ion battery pack mounted on the chassis itself. The motor shield is instrumental in providing motor controls to the product. To do this, it utilizes a specific electric circuit, called an H bridge.
 
 \subsection{The H bridge}
 
-An h bridge is a circuit that allows a voltage to be applied across a load in either direction. The purpose of this in the case of this project is to enable controls of the two motors in a way so that they can function individually, and both drive forwards and backwards.\\
+An H bridge is a circuit that allows a voltage to be applied across a load in either direction. The purpose of this in the case of this project is to enable controls of the two motors in a way so that they can function individually, and both drive forwards and backwards.\\
 At first, there were experiments with custom prints and a purpose-built h bridge on the first iteration of the motor shield. However after testing, it proved faulty and was changed to accommodate time constraints.
 =======
 TBD samarbejd med personen bag det
