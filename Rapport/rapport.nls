@@ -6,9 +6,9 @@
   \item [{PID}]\begingroup Proportional-integral-derivative controller\nomeqref {0}
 		\nompageref{1}
   \item [{THT}]\begingroup Through-hole-technology\nomeqref {0}\nompageref{1}
-  \item [{3D print}]Printing something in 3 dimensions\begingroup \nomeqref {0}
+  \item [{3D\\ print}]\begingroup Printing something in 3 dimensions\nomeqref {0}
 		\nompageref{1}
-  \item [{}]\begingroup \nomeqref {0}
+  \item [{PWM}]\begingroup Pulse-width modulation\nomeqref {0}
 		\nompageref{1}
 
 \end{thenomenclature}

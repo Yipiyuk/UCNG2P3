@@ -1,6 +1,6 @@
 \section{Description of the software structure and functionality}
 
-The following section will introduce the software segment, based on our required specifications. The design will shown in the form of a flowchart.
+The following section will introduce the software segment, based on the required specifications. The design will shown in the form of a flowchart.
 TBD Softwarebeskrivelse og underafsnit
 
 \section {Description of the PID controller} 
@@ -38,8 +38,8 @@ If the proportional gain is too high, the system can become unstable. Contrarily
 \end{figure}
 
 \subsection {Steady-state error}
-TBD (omskrives)
-%Because a non-zero error is required to drive it, a proportional controller generally operates with a so-called steady-state error.[a] Steady-state error (SSE) is proportional to the process gain and inversely proportional to proportional gain. SSE may be mitigated by adding a compensating bias term to the setpoint or output, or corrected dynamically by adding an integral term.
+
+When looking at figure 3.2 the reference point is the blue line and the feedback line is the green, the two lines merge up and the steady-state is achieved. When the lines don't merge, but the feedback line is slightly above or under the reference point. This steady-state error can be minimized by adjusting the proportional and integral term. 
 
 \subsection {Integral control(I)}
 
@@ -64,7 +64,6 @@ The derivative of the process error is calculated by determining the slope of th
   \label{PID controller}
 \end{figure}
 
-TBD (billede skal rettes ind til teksten)
 The derivative term is given by:
 
 $$D_{\mathrm{out}}=K_d\frac{de(t)}{dt}$$
@@ -86,7 +85,7 @@ An ideal derivative is not causal, so that implementations of PID controllers in
 
 Tuning the loop is the term used to describe the adjustments of the PID’s control parameters (proportional band/gain, integral gain/reset, derivative gain/rate) to the optimal values for the given control scheme. \\ Stability is the first requirement; however systems can differ greatly, and different applications may have different requirements and these may even conflict with each other. For example, high speed and high accuracy often cancel each other out, because high speed may cause overshooting, while high accuracy is slow.\\ The ideal realistic behaviour is both as fast as possible, while also having minimum overshoot and oscillation. \\ 
 
-Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In our case, we used manual tuning of the numbers.
+Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In this case, there was used manual tuning of the numbers.
 
 \subsection {Stability} 
 
@@ -101,7 +100,7 @@ Finally, increase $K_d$, if required at all, until the loop is acceptably quick 
 \\ 
 A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ %Kan vi få en kilde på det?
 In the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
-\\TBD kilde (http://blog.opticontrols.com/archives/1066)
+\\ kilde (http://blog.opticontrols.com/archives/1066)
 
 TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 
@@ -131,9 +130,14 @@ Table 3.1 gives an informative overview of what the different parameters does wh
 
 \section{Description of the Pulse Width Modulator - PWM}
 
+<<<<<<< HEAD
 A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\
 The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average output is easily altered by changing the proportions between the on and off state. The longer the switch is set to on compared to off, the higher the average supply will be.\
 Pulse-width modulation utilizes a rectangular pulse where the width of the pulse is modulated to get the variation in the average value of the waveform.\ Given the pulse waveform $f(t)$ over the period $T$, low value $y_\mathrm{min}$ and high value $y_\mathrm{high}$ and duty cycle $D$, the average waveform is given by: 
+=======
+A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - in this projects case, this means the motors.\\
+The average voltage and amplitude given to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average is easily altered by changing how much of the time the state is set to on and how long it is set to off. The longer the switch is set to on compared to off, the higher the average supply will be.\\
+>>>>>>> origin/master
 
 $$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\
 
@@ -147,6 +151,6 @@ This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \c
 
 \subsection{Duty cycles}
  The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
- TBD Vores duty cycle\\
+TBD Vores duty cycle\\
  
  
