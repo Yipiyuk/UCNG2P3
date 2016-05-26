@@ -2,7 +2,8 @@
 In the following section, the hardware parts and functions will be introduced and described. The following part consists of sensor selection, ADC, pic uno32 board \& motor-shield.
 
 \section{Hardware diagram}
-The micro-controller is connected to the motor-shield and the motor-shield is then powering both motor 1 and motor 2. The sensor-array is sending the data collected to the micro-controller which then sends it further to the bluetooth unit. The bluetooth unit then writes the data to the terminal. 
+The micro-controller is connected to the motor-shield and the motor-shield is then powering both motor 1 and motor 2. The sensor-array is sending the collected data to the micro-controller every 25 ms, the micro-controller then sends it further to the bluetooth unit. The bluetooth unit then writes the data to the terminal. 
+
 
  \begin{figure}[!ht]
     	\centering    		\includegraphics[width=.6\textwidth]{figures/hardwaredia2.png}
