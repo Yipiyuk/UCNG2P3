@@ -5,17 +5,14 @@ The section consists of the PID controller \& the Pulse width modulator.
 TBD Softwarebeskrivelse og underafsnit
 
 \section {Description of the PID controller} 
- 
 A PID controller continuously calculates an error value as the difference to a reference point and a measured process variable.\\
 PID is an abbreviation for a proportional-integral-derivative controller, it is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line to follow and the PID will allow the MCU to adjust the power to the engines, to steer accordingly to said reference point.
 $$\mathrm{F}(t)=K_p{e(t)} + K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} + K_{d}\frac{de(t)}{dt}$$
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.5\textwidth]{figures/PID_block.png}
-  
-  \caption{Block diagram, showing the idea of PID controller. Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:PID_en_updated_feedback.svg
-  }
+  \includegraphics[width=0.5\textwidth]{figures/PID_block.png}  
+\caption{Block diagram, showing the idea of PID controller. Credits: \url{www.wikipedia.org/wiki/PID_controller}}  
   \label{PID controller}
 \end{figure}
 
@@ -33,7 +30,7 @@ If the proportional gain is too high, the system can become unstable. Contrarily
   \centering
   \includegraphics[width=0.5\textwidth]{figures/PIDP.jpg}
   
-  \caption{$K_p$ with 3 values. ($K_i$, $K_d$ held constant) Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:PID_varyingP.jpg
+  \caption{$K_p$ with 3 values. ($K_i$, $K_d$ held constant) Credits: \url{www.wikipedia.org/wiki/PID_controller}
   }
   \label{PID controller}
 \end{figure}
@@ -60,7 +57,7 @@ The derivative of the process error is calculated by determining the slope of th
   \centering
   \includegraphics[width=0.5\textwidth]{figures/Change_with_Ki.png}
   
-  \caption{$K_i$ shown with 3 values. Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:Change_with_Ki.png
+  \caption{$K_i$ shown with 3 values. Credits: \url{www.wikipedia.org/wiki/PID_controller}
   }
   \label{PID controller}
 \end{figure}
@@ -75,7 +72,7 @@ An ideal derivative is not causal, so that implementations of PID controllers in
   \centering
   \includegraphics[width=0.5\textwidth]{figures/Change_with_Kd.png}
   
-  \caption{$K_d$ shown with 3 values. Credits: %https://en.wikipedia.org/wiki/PID_controller#/media/File:Change_with_Kd.png
+  \caption{$K_d$ shown with 3 values. Credits: \url{www.wikipedia.org/wiki/PID_controller}
   }
   \label{PID controller}
 \end{figure}
@@ -101,7 +98,7 @@ Finally, increase $K_d$, if required at all, until the loop is acceptably quick 
 \\ 
 A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ %Kan vi få en kilde på det?
 In the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
-\\ kilde (http://blog.opticontrols.com/archives/1066)
+\\
 
 TBD (Vores fremgangsmåde med PID alt efter om "D" skal bruges)
 

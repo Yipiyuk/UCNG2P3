@@ -10,5 +10,6 @@
 		\nompageref{1}
   \item [{PWM}]\begingroup Pulse-width modulation\nomeqref {0}
 		\nompageref{1}
+ \item [{MCU}]\begingroup Micro controller unit\nomeqref {0}\nompageref{1}
 
 \end{thenomenclature}
