@@ -13,29 +13,38 @@ The micro-controller is connected to the motor-shield and the motor-shield is th
 
 \section{Selection of sensor}
 
-\begin{table}[htbp]
-    \begin{tabular}{|l|l|l|l|}
-        \hline
-        Name                & QRE1113 board & OPB706A  & OPB704    \\ \hline
-        Max sensor distance & 3mm                            & 1.27mm   & 3.8mm     \\ \hline
-        Forward current     & 50mA                           & 20mA     & 40mA      \\ \hline
-        Mounting            & On print                       & THT      & In casing \\ \hline
-        Price               & 19.43DKK                       & 26.90DKK & 42.55DKK  \\ \hline
-        Notes               & ~                              & ~        & ~         \\
-        \hline
-    \end{tabular}
-    \caption{Table of a selection of sensors.}
-\label{sensor_table}
+\begin{table}[]
+\centering
+\caption{Table showing the sensors in consideration}
+\label{Sensor table}
+\begin{tabular}{|l|l|l|}
+\hline
+Name                & QRE1113 Board & OPB704    \\ \hline
+Max sensor distance & 3mm           & 3.8mm     \\ \hline
+Forward current     & 50mA          & 40mA      \\ \hline
+Mounting            & On print      & In casing \\ \hline
+Price               & 19.43DKK      & 42.55DKK  \\ \hline
+\end{tabular}
 \end{table}
-The table is showing more sensors than the OPB 704, that is to show the price difference and the utility from sensor to sensor. \emph{(fig 2.1)}
 
 
 
-\subsection{OPB704 Sensor}
-The selected sensor for the line following robot will be the OPB704.\\
-This sensor has been chosen from a range of criteria, most important being the optimal sensor distance and the easier mounting method. This method makes it more efficient to add several sensors in an array, which will be done with a 3D-printed mount. 
+The table shows a comparison of the two sensors that were taken into consideration for the project, that is to show the price difference and the utility from sensor to sensor. \emph{(fig 2.1)}
+
+
+
+\subsection{The OPB704
+}
+The selected sensor for the line following robot will not be the OPB704 after all. It was supposed to be. But because of interface and coding problems it is no longer the sensor that will be used.\\
+The sensor was chosen from a range of criteria, most important being the optimal sensor distance and the easier mounting method. This method makes it more efficient to add several sensors in an array, which will be done with a 3D-printed mount. 
 
 \sidebyimg{figures/opb704.jpg}{The sensor OPB 704}{figures/sensorarray.jpg}{3D printed sensor array module}
+
+\subsection{The QRE1113 board(Analog)}
+
+The new sensor now used is the QRE1113, the way the sensor works is an LED will shoot out an infra-red beam that then should be reflected back into the sensitive photo transistor. When the photo transistor is receiving an infra-red beam the output will begin to lower. This sensor is easy to mount and will be done so to a 3D printed mount. The sensor is commonly used within the line following robot business which is a good indicator that it's reliable.
+
+\sidebyimg{figures/QRE.jpg}{QRE1113 Sensor with own mount}{figures/QREmount.jpg}{3D printed sensor array module withe the QRE1113}
 
 
 \section{Analog-to-digital converter (ADC)}
