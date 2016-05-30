@@ -12,7 +12,7 @@ $$\mathrm{F}(t)=K_p{e(t)} + K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} + K_{d}\frac{de(
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.5\textwidth]{figures/PID_block.png}  
-\caption{Block diagram, showing the idea of PID controller. Credits: \url{www.wikipedia.org/wiki/PID_controller}}  
+\caption{Block diagram, showing the idea of PID controller.} \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller}}  
   \label{PID controller}
 \end{figure}
 
@@ -30,8 +30,8 @@ If the proportional gain is too high, the system can become unstable. Contrarily
   \centering
   \includegraphics[width=0.5\textwidth]{figures/PIDP.jpg}
   
-  \caption{$K_p$ with 3 values. ($K_i$, $K_d$ held constant) Credits: \url{www.wikipedia.org/wiki/PID_controller}
-  }
+  \caption{$K_p$ with 3 values. ($K_i$, $K_d$ held constant)} 
+  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller}}
   \label{PID controller}
 \end{figure}
 
@@ -57,8 +57,8 @@ The derivative of the process error is calculated by determining the slope of th
   \centering
   \includegraphics[width=0.5\textwidth]{figures/Change_with_Ki.png}
   
-  \caption{$K_i$ shown with 3 values. Credits: \url{www.wikipedia.org/wiki/PID_controller}
-  }
+  \caption{$K_i$ shown with 3 values.} 
+  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller}}
   \label{PID controller}
 \end{figure}
 
@@ -71,9 +71,8 @@ An ideal derivative is not causal, so that implementations of PID controllers in
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.5\textwidth]{figures/Change_with_Kd.png}
-  
-  \caption{$K_d$ shown with 3 values. Credits: \url{www.wikipedia.org/wiki/PID_controller}
-  }
+  \caption{$K_d$ shown with 3 values.} 
+  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller}}
   \label{PID controller}
 \end{figure}
 
@@ -100,7 +99,7 @@ A fast PID loop tuning process usually overshoots slightly to reach the referenc
 In the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
 \\
 
-TBD (Vores fremgangsmåde med PID alt efter om " THE D" skal bruges)
+TBD (Vores fremgangsmåde med PID alt efter om "THE D - giggedy" skal bruges)
 
 \begin{table}[h]
 \centering
@@ -128,14 +127,9 @@ Table 3.1 gives an informative overview of what the different parameters does wh
 
 \section{Description of the Pulse width modulator - PWM}
 
-<<<<<<< HEAD
 A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\
 The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average output is easily altered by changing the proportions between the on and off state. The longer the switch is set to on compared to off, the higher the average supply will be.\
-Pulse-width modulation utilizes a rectangular pulse where the width of the pulse is modulated to get the variation in the average value of the waveform.\ Given the pulse waveform $f(t)$ over the period $T$, low value $y_\mathrm{min}$ and high value $y_\mathrm{high}$ and duty cycle $D$, the average waveform is given by: 
-=======
-A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - in this projects case, this means the motors.\\
-The average voltage and amplitude given to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average is easily altered by changing how much of the time the state is set to on and how long it is set to off. The longer the switch is set to on compared to off, the higher the average supply will be.\\
->>>>>>> origin/master
+Pulse-width modulation utilizes a rectangular pulse where the width of the pulse is modulated to get the variation in the average value of the waveform.\ Given the pulse waveform $f(t)$ over the period $T$, low value $y_\mathrm{min}$ and high value $y_\mathrm{high}$ and duty cycle $D$, the average waveform is given by: \\
 
 $$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\
 
@@ -149,7 +143,7 @@ This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \c
 
 \subsection{Duty cycles}
  The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
-TBD Vores duty cycle\\
+TBD Vores duty cycle
 
 \section{Future development?}
 TBD er det nødvendigt?
@@ -157,4 +151,12 @@ TBD er det nødvendigt?
 evt, chassis, LCD osv. 
 
 \section{The GUI}
-The project utilizes a GUI written in C\# , it shows a graphical representation of the sensor load, as well as which motor is running in accordance to the PID. TBD mere. TBD Screenshots.  
+The project utilizes a GUI written in C\# , it shows a graphical representation of the sensor load, as well as which motor is running in accordance to the PID.\
+The GUI has controls to set the COM-port as well as the baud rate, and a button prompt to connect and disconnect the robots blue-tooth transmission. It also features a decision history on the right (TBD - er det der stadig?) and a terminal in the bottom, showing all the data sent from the ADC on the robot.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/guiexample.png}  
+\caption{Screenshot of the C\# GUI used to monitor the sensor readings.}  
+  \label{PID controller}
+\end{figure}
