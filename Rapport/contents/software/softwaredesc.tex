@@ -4,6 +4,11 @@ The following section will introduce the software segment, based on the required
 The section consists of the PID controller \& the Pulse width modulator.
 TBD Softwarebeskrivelse og underafsnit
 
+\section{Analog to digital conversion (software)}
+
+The code is showing how the ADC runs for the product.\\(AD1PCFG TBD)
+AD1CON1 can be seen as the control point, when it is given 0x0000 it will start converting if the loop has already run. If it hasn't it will do nothing.
+
 \section {Description of the PID controller} 
 A PID controller continuously calculates an error value as the difference to a reference point and a measured process variable.\\
 PID is an abbreviation for a proportional-integral-derivative controller, it is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line to follow and the PID will allow the MCU to adjust the power to the engines, to steer accordingly to said reference point.
@@ -142,7 +147,7 @@ This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \c
 This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \cdot y_\mathrm{max}$. From this it can be observed that the average value of the signal $(\overline{y})$ has a direct correlation with the duty cycle D. 
 
 \subsection{Duty cycles}
- The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
+The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
 TBD Vores duty cycle
 
 \section{Future development?}
