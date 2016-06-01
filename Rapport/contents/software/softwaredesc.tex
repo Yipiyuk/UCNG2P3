@@ -6,6 +6,28 @@ TBD Softwarebeskrivelse og underafsnit
 
 \section{Analog to digital conversion (software)}
 
+TDB når koden er pæn og der kan laves en snippet!
+\begin{lstlisting}
+
+extern int analogRead(char CH) {
+    AD1PCFG = ~CH; // PORTB = Digital; RB2 = analog
+    AD1CON1 = 0x0000; // SAMP bit = 0 ends sampling
+    // and starts converting
+    //AD1CHS = 0x00020000; // Connect RB2/AN2 as CH0 input
+    // in this example RB2/AN2 is the input
+    AD1CSSL = 0;
+    AD1CON3 = 0x0001; // Manual Sample, TAD = internal 6 TPB
+    AD1CON2 = 0;
+    AD1CON1SET = 0x8000; // turn on the ADC
+    AD1CHSbits.CH0SA = CH;
+    AD1CON1SET = 0x0002; // start sampling ...
+    DelayUs(2); // for 2 us
+    AD1CON1CLR = 0x0002; // start Converting
+    while (!(AD1CON1 & 0x0001)); // conversion done?
+    return ADC1BUF0;	
+}
+\end{lstlisting}
+
 The code is showing how the ADC runs for the product.\\(AD1PCFG TBD)
 AD1CON1 can be seen as the control point, when it is given 0x0000 it will start converting if the loop has already run. If it hasn't it will do nothing.
 
@@ -100,8 +122,8 @@ When a system must be online at all times a method for tuning is to first set $K
 Then increase $K_i$ until any set off is corrected in sufficient time for the process. Adding too much $K_i$ will however cause an instability. 
 Finally, increase $K_d$, if required at all, until the loop is acceptably quick to reach its reference after a load disturbance.
 \\ 
-A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ %Kan vi få en kilde på det?
-In the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
+A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ 
+But in the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
 \\
 
 TBD (Vores fremgangsmåde med PID alt efter om "THE D - giggedy" skal bruges)
@@ -157,7 +179,7 @@ evt, chassis, LCD osv.
 
 \section{The GUI}
 The project utilizes a GUI written in C\# , it shows a graphical representation of the sensor load, as well as which motor is running in accordance to the PID.\
-The GUI has controls to set the COM-port as well as the baud rate, and a button prompt to connect and disconnect the robots blue-tooth transmission. It also features a decision history on the right (TBD - er det der stadig?) and a terminal in the bottom, showing all the data sent from the ADC on the robot.
+The GUI has controls to set the COM-port as well as the baud rate, and a button prompt to connect and disconnect the robots blue-tooth transmission. It also features a decision history on the right (TBD - er det der stadig?) and a terminal in the bottom, showing all the data sent from the ADC to the robot.
 
 \begin{figure}[h!]
   \centering

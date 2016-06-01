@@ -76,6 +76,9 @@
 \definecolor{NavyBlue}{RGB}{0, 0, 128}
 \definecolor{darkgray}{gray}{0.35}
 \definecolor{AleeRed}{rgb}{0.5,0,0}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
 %hyperlinks in the tabel of contents - comment this out before the report is printed.
 \usepackage{hyperref}
 \hypersetup{
@@ -97,23 +100,27 @@
 %package for writing program code in latex
 \usepackage{listings}
 
-\lstset{ 
-language=C,               	 	% choose the language of the code
-basicstyle=\footnotesize,       % the size of the fonts that are used for the code
-numbers=left,                   % where to put the line-numbers
-numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
-stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
-numbersep=5pt,                  % how far the line-numbers are from the code
-backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
-showspaces=false,               % show spaces adding particular underscores
-showstringspaces=false,         % underline spaces within strings
-showtabs=false,                 % show tabs within strings adding particular underscores
-frame=single,           		% adds a frame around the code
-tabsize=2,          			% sets default tabsize to 2 spaces
-captionpos=b,           		% sets the caption-position to bottom
-breaklines=true,       			% sets automatic line breaking
-breakatwhitespace=false,    	% sets if automatic breaks should only happen at whitespace
-escapeinside={\%*}{*)}          % if you want to add a comment within your code
+\lstset{  
+  %escapeinside={\%*~}{*)},
+  basicstyle=\small,               
+  breaklines=true,                                   
+  comment=[l]{//},
+  commentstyle=\color{mygreen},             
+  extendedchars=false,              
+  frame=none,	                                   
+  keywordstyle=\color{blue},
+  keywordstyle=[2]\color{red},        
+  language=C,                            
+  numbers=left,                   
+  numbersep=5pt,                   
+  numberstyle=\scriptsize,                                                                          
+  stringstyle=\color{mymauve},     
+  tabsize=2,	             
+  morekeywords=[2]{AD1PCFG,AD1CON1, AD1CSSL, AD1CON3, AD1CON2, AD1CON1SET, AD1CHS, AD1CON1CLR, AD1CHSbits, DelayUs, ADC1BUF0, CH0SA},   
+ % morekeywords=[3]{CH0SA},  
+ % keywordstyle=[3]\color{blue},
+  identifierstyle=\ttfamily,
+  backgroundcolor=\color{white},
 }
 
 %setting references (using numbers) and supporting i.a. Chicargo-style:
