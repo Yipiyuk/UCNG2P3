@@ -35,7 +35,7 @@ The table shows a comparison of the two sensors that were taken into considerati
 
 \subsection{The OPB704}
 
-The OPB704 sensor ended up being selected for the robot over the popular QRE1113 sensor board. It has a higher sensor max distance (3.8mm compared to the QRE1113s 3mm) and it has the same functionality. It comes with a special casing, for which a special mounting unit was 3D-printed to accommodate an array of 7. This makes the mounting very solid and tightly fitted unto the robot, which ideally makes the sensor array more stable in case of an uneven test course.
+The OPB704 sensor ended up being selected for the robot over the popular QRE1113 sensor board. It has a higher sensor max distance (3.8mm\footnote{http://www.farnell.com/datasheets/1884910.pdf} compared to the QRE1113s 3mm) and it has the same functionality. It comes with a special casing, for which a special mounting unit was 3D-printed to accommodate an array of 7. This makes the mounting very solid and tightly fitted unto the robot, which ideally makes the sensor array more stable in case of an uneven test course.
 
 \sidebyimg{figures/opb704.jpg}{The sensor OPB 704}{figures/sensorarray.jpg}{3D printed sensor array module}
 
@@ -63,7 +63,7 @@ TBD
 
 \section{The Arduino Uno32 board}
 
-Our main computing core is at the Arduino Uno32 board. The board was selected both because of previous experiences, and because it met the set requirements perfectly - most importantly it has twelve analog imputs to handle our array of seven sensors. This board utilizes the PIC32MX320F128 microcontroller, which features a 32-bit processing core running at 80Mhz with 128K of flash program memory and 16K SRAM data memory. This board allowed the most important aspects of the project to become reality; namely a GUI showing both the ADC readings as well as visualizing the sensor imputs, plenty of analog inputs to allow for the sensor array, and BlueTooth transmission of data from the robot unto a computer.\newline
+Our main computing core is at the Arduino Uno32 board. The board was selected both because of previous experiences, and because it met the set requirements perfectly - most importantly it has twelve analog imputs to handle our array of seven sensors. This board utilizes the PIC32MX320F128 microcontroller, which features a 32-bit processing core running at 80Mhz with 128K of flash program memory and 16K SRAM data memory\footnote{http://www.microchip.com/wwwproducts/en/PIC32MX320F128H}. This board allowed the most important aspects of the project to become reality; namely a GUI showing both the ADC readings as well as visualizing the sensor imputs, plenty of analog inputs to allow for the sensor array, and BlueTooth transmission of data from the robot unto a computer.\newline
 The board is compatible for use with MPLAB IDE and the PICKit3 debugger.
 
 \section{The motor shield - PKA03}
@@ -74,10 +74,7 @@ The motor shield was chosen because it is compatible with the Uno32 board, and f
 
 An H bridge is a circuit that allows a voltage to be applied across a load in either direction. The purpose of this in the case of this project is to enable controls of the two motors in a way so that they can function individually, and both drive forwards and backwards.\\
 At first, there were experiments with custom prints and a purpose-built h bridge on the first iteration of the motor shield. However after testing, it proved faulty and was changed to accommodate time constraints.
-=======
-TBD samarbejd med personen bag det
->>>>>>> origin/master
 
 \section{The blue-tooth transmitter - BlueSMIRF Silver}
 
-The robot utilizes the BlueSMIRF Silver blue-tooth transmitter made by Sparkfun. Its function is to send data from the ADC and pulse width modulator (see the software section) to a C\# GUI run on a computer. This way, it is possible to monitor both the inputs the robot is receiving, as well as the logic behind the steering. It allows for any stream between 2400 to 115200 bps. 
+The robot utilizes the BlueSMIRF Silver blue-tooth transmitter made by Sparkfun. Its function is to send data from the ADC and pulse width modulator (see the software section) to a C\# GUI run on a computer. This way, it is possible to monitor both the inputs the robot is receiving, as well as the logic behind the steering. It allows for any stream between 2400 to 115200 bps\footnote{https://www.sparkfun.com/products/12577}. 

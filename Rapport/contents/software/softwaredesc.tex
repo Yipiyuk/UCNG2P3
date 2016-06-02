@@ -58,7 +58,7 @@ If the proportional gain is too high, the system can become unstable. Contrarily
   \includegraphics[width=0.5\textwidth]{figures/PIDP.jpg}
   
   \caption{$K_p$ with 3 values. ($K_i$, $K_d$ held constant)} 
-  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller}}
+  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller\#Proportional_term}}
   \label{PID controller}
 \end{figure}
 
@@ -85,7 +85,7 @@ The derivative of the process error is calculated by determining the slope of th
   \includegraphics[width=0.5\textwidth]{figures/Change_with_Ki.png}
   
   \caption{$K_i$ shown with 3 values.} 
-  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller}}
+  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller\#Integral_term}}
   \label{PID controller}
 \end{figure}
 
@@ -99,7 +99,7 @@ An ideal derivative is not causal, so that implementations of PID controllers in
   \centering
   \includegraphics[width=0.5\textwidth]{figures/Change_with_Kd.png}
   \caption{$K_d$ shown with 3 values.} 
-  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller}}
+  \subcaption{Credits: \url{www.wikipedia.org/wiki/PID_controller\#Derivative_term}}
   \label{PID controller}
 \end{figure}
 
@@ -144,7 +144,7 @@ TBD (Vores fremgangsmåde med PID alt efter om "THE D - giggedy" skal bruges)
 
 \subsubsection {Table 3.1 explained}
 
-Table 3.1 gives an informative overview of what the different parameters does when tuned manually.
+Table 3.1 gives an informative overview of what the different parameters does when tuned manually\footnote{http://saba.kntu.ac.ir/eecd/pcl/download/PIDtutorial.pdf}.
 
 \begin{enumerate}
 		\item[•]To minimize the rise time, decrease $K_p$
@@ -160,7 +160,7 @@ Pulse-width modulation utilizes a rectangular pulse where the width of the pulse
 
 $$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\
 
-This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \cdot y_\mathrm{max}$. From this it can be observed that the average value of the signal $(\overline{y})$ has a direct correlation with the duty cycle D. 
+This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \cdot y_\mathrm{max}$. From this it can be observed that the average value of the signal $(\overline{y})$ has a direct correlation with the duty cycle D.\footnote{\url{https://en.wikipedia.org/wiki/Pulse-width_modulation\#Principle}}.
  
  $$\overline{y}=\frac{1}{T}\left(\int_{0}^{DT}y_\mathrm{max}dt+\int_{DT}^{T}y_\mathrm{min}dt\right)$$
  $$=\frac{1}{T}\left(D \cdot T \cdot y_\mathrm{max}+T(1-D)y_\mathrm{min}\right)$$
