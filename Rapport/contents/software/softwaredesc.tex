@@ -28,6 +28,7 @@ extern int analogRead(char CH) {
 }
 \end{lstlisting}
 The software code is showing how the ADC is converting analog to digital for the product.
+TBD: Det er nok ikke nødvendigt at splitte det helt op som efterfølgende, det kan bare beskrives som en helhed.
 \begin{lstlisting}
 AD1PCFG = ~CH; // PORTB = Digital; RB2 = analog
 \end{lstlisting}
@@ -163,53 +164,6 @@ A fast PID loop tuning process usually overshoots slightly to reach the referenc
 But in the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
 \\
 
-\begin{lstlisting}
-void PID(int sensorAvg, int sensorSum)
-{
-	if(sensorSum > 0) //As long as there is at least one sensor active
-    {
-        sensorPos = sensorAvg/sensorSum; //Position of the line on the sensorarray
-        sensorProp = sensorPos - 3;  //Proportional part, position minus middle sensor position
-        sensorInt = sensorInt + sensorProp; //Integral part
-		if(sensorInt > 100) //Makes sure Integral is not too large, reduces time to adjust
-            sensorInt = 100;  
-        if(sensorInt < -100)
-            sensorInt = -100;
-        sensorDer = sensorProp - sensorLastProp; //Derivative part
-\end{lstlisting}
-
-
-\begin{lstlisting}
-sensorError = (sensorProp * kp)+(sensorInt*ki)+(sensorDer*kd); //PID calculation
-        sensorLastProp = sensorProp; //Saves proportional for next derivative
-        if(sensorError < -(initialPwm)) //Sets an upper cap for adjustment
-            sensorError = -(initialPwm);
-        if(sensorError > (initialPwm))
-            sensorError = (initialPwm);
-\end{lstlisting}
-
-
-\begin{lstlisting}
-if(sensorError<0){
-            adjustedPWM[1] = initialPwm+sensorError; //Decrease right motor, sensorError is negative here
-            adjustedPWM[0] = initialPwm-sensorError; //Increase left motor
-            dir = 1; //turn right
-        }
-        else if(sensorError>0){
-            adjustedPWM[1] = initialPwm+sensorError;
-            adjustedPWM[0] = initialPwm-sensorError; 
-            dir = 0; //turn left
-        }
-        else{
-            adjustedPWM[0] = initialPwm;
-            adjustedPWM[1] = initialPwm;
-            dir = 2;
-        }
-    }
- }
-\end{lstlisting}
-
-
 \begin{table}[h]
 \centering
 \caption{Manual tuning}
@@ -233,6 +187,58 @@ Table 3.1 gives an informative overview of what the different parameters does wh
 		\item[•]To eliminate the steady-state error, increase $K_i$
 		\item[•]To reduce the overshoot and settling time, decrease $K_d$
 	\end{enumerate}
+	
+\subsection{PID Implementation}
+TBD har ændret sensorAvg til sensorMean, gør dette i koden også
+\begin{lstlisting}
+void PID(int sensorMean, int sensorSum)
+{
+	if(sensorSum > 0) //At least one sensor sees black
+	{
+		sensorPos = sensorMean/sensorSum; //Position of the line on the sensorarray
+		sensorProp = sensorPos - 3;  //Proportional part
+		sensorInt = sensorInt + sensorProp; //Integral part
+		if(sensorInt > 100) //Reduce adjustment time by limiting Int
+			sensorInt = 100;  
+		if(sensorInt < -100)
+			sensorInt = -100;
+		sensorDer = sensorProp - sensorLastProp; //Derivative part
+\end{lstlisting}
+The PID function has two parameters, sensorMean and sensorSum. These are used to calculate where the line is in relation to the sensors. In the beginning, a check is made to make sure the line actually is on the array somewhere, since the program would stall by trying to divide by sensorSum being 0. If at least one sensor detects the line, the position is calculated by dividing the mean value of the active sensors by the amount of sensors active. Since sensorMean is calculated using weighs on each sensor, this will give the average position. The function then calculates the different parts of the PID controller, firstly the proportional part. This is done by simply subtracting the weighted value of the middle sensor from the position calculated earlier. Next up is the integral part, which is calculated by adding the previous value of the integral to the proportional value. Right after, the integral is limited since the robot will be working fast on a small line. Derivative is the last part calculated, which is done by subtracting the previous value of the proportional part from the current value.
+
+\begin{lstlisting}
+		sensorError = (sensorProp*kp)+(sensorInt*ki)+(sensorDer*kd); //PID calculation
+		sensorLastProp = sensorProp; //Saves proportional for next derivative
+		if(sensorError < -(initialPwm)) //Sets an upper cap for adjustment
+			sensorError = -(initialPwm);
+		if(sensorError > (initialPwm))
+			sensorError = (initialPwm);
+\end{lstlisting}
+This part of the code handles the total PID value as well as limiting this value. First of all, it multiplies the previous PID values by their constants and adding these numbers together and then saves the proportional value to be handled by the derivative part next time. At the end, sensorError is limited to the maximum speed of the motors, to make future calculations easier.
+
+\begin{lstlisting}
+		if(sensorError<0)
+		{
+			adjustedPWM[0] = initialPwm-sensorError; //Increase left motor, sensorError is negative here
+			adjustedPWM[1] = initialPwm+sensorError; //Decrease right motor
+			dir = 1; //turn right
+		}
+		else if(sensorError>0)
+		{
+			adjustedPWM[0] = initialPwm-sensorError;
+			adjustedPWM[1] = initialPwm+sensorError; 
+			dir = 0; //turn left
+		}
+		else
+		{
+			adjustedPWM[0] = initialPwm;
+			adjustedPWM[1] = initialPwm;
+			dir = 2;
+		}
+	}
+}
+\end{lstlisting}
+The final part of the PID function handles the duty cycle sent to the motors. If sensorError is less than 0, the robot needs to turn right, increasing engine power on the left while decreasing engine power on the right. If sensorError is positive, do the opposite. If sensorError is exactly 0, the duty cycle will remain what it was last iteration, which is a very rare case.
 
 \section{Description of the Pulse width modulator - PWM}
 
