@@ -1,7 +1,8 @@
 \begin{thenomenclature} 
 
  \nomgroup{A}
-
+\item [{PNP}]\begingroup Positive-negative-positive\nomeqref {0}\nompageref{1}
+\item [{NPN}]\begingroup Negative-positive-negative\nomeqref {0}\nompageref{1}
   \item [{ADC}]\begingroup Analog-digital conversion\nomeqref {0}\nompageref{1}
   \item [{PID}]\begingroup Proportional-integral-derivative controller\nomeqref {0}
 		\nompageref{1}
