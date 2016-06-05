@@ -1,0 +1,383 @@
+\section{C code}
+main.c:
+\begin{lstlisting}
+#include <xc.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#define _SUPPRESS_PLIB_WARNING 1   
+#define _DISABLE_OPENADC10_CONFIGPORT_WARNING 1  
+#include <plib.h>
+#include "setup.h"
+#include "Functions.h"
+#include "UART.h"
+#include <math.h>
+#include "Delay.h"
+#include "ADC.h"
+
+//Left wheel
+#define DIRASetup TRISFbits.TRISF1
+#define DIRA PORTFbits.RF1
+//Right wheel
+#define DIRBSetup TRISDbits.TRISD10
+#define DIRB PORTDbits.RD10
+//Bottom button
+#define CalLSetup TRISDbits.TRISD8
+#define CalL PORTDbits.RD8
+//Top button
+#define CalHSetup TRISDbits.TRISD9
+#define CalH PORTDbits.RD9
+
+int ADCHighestValue[7] = {0,0,0,0,0,0,0};
+int ADCLowestValue[7] = {1024,1024,1024,1024,1024,1024,1024};
+int caliFlag = 0;
+
+//PWM
+float kp = 8.5; 
+float ki = 0.01;
+float kd = 850; 
+float lastError = 0;
+float integral = 0;
+int maxPwm = 80;
+int initialPwm = 50;
+int dir = 2; //0 = left, 1 = right
+int turn = 0;
+int DIR[] = {0, 0};
+
+//PID variables
+float sensorMean = 0;
+float sensorSum = 0;
+float sensorPos = 0;
+float sensorProp = 0;
+float sensorInt = 0;
+float sensorDer = 0;
+float sensorLastProp = 0;
+float sensorError = 0;
+float sensorOn[7] = {0,0,0,0,0,0,0};
+int adjustedPWM[2] = {0,0};
+int correctFlag = 0;
+
+int main(int argc, char** argv) {
+    int ADCs[] = {2, 8, 14, 3, 5, 9, 15}; //Pins for each sensor, in order
+    int ADCAvgValue[7];
+
+    int ADCData[7];
+    int PWM[] = {0, 0};
+
+    int POS[] = {0, 0};
+    int i = 0;
+    int averageFlag = 0;
+    
+    UART1Init(115200, 1);
+    initPWM();
+    DIRASetup = 0;
+    DIRBSetup = 0;
+    CalLSetup = 1;
+    CalHSetup = 1;
+    
+    for (;;) {
+        for(i = 0;i<7;i++){
+            ADCData[i] = analogRead(ADCs[i]); //Reads data on all sensors
+        }
+        checkCalState(ADCs);
+        //Working PID
+        if(caliFlag == 1) //Run if calibrated
+        {
+            if(averageFlag == 0) //If average value on each sensor has not been calculated yet
+            {
+                for(i = 0;i<7;i++)
+                    ADCAvgValue[i] = (ADCHighestValue[i]+ADCLowestValue[i])/2; //Calculate average value for each sensor
+                averageFlag = 1;
+            }
+            for(i=0;i<7;i++){
+                if(ADCData[i]>ADCAvgValue[i]) //If sensor detects a line, set this sensor to be 1 in sensorOn
+                    sensorOn[i] = 1;
+                else
+                    sensorOn[i] = 0;
+            }
+            sensorMean = 0;
+            sensorSum = 0;
+            for(i=0;i<7;i++){
+                sensorMean += sensorOn[i]*i*1; //Makes sensors ready for weighted mean calculation
+                sensorSum += sensorOn[i]; //Calculate how many sensors are on
+            }
+            PID(sensorMean, sensorSum);//Calculates PID
+            PWM[0] = adjustedPWM[0]; 
+            PWM[1] = adjustedPWM[1];
+            adjustDuty(1, PWM[0]); //Adjusts the duty cycle for left motor
+            adjustDuty(2, PWM[1]); //Right motor
+        }
+        DIRA = DIR[0];
+        DIRB = DIR[1];
+        
+        //Telemetry to interface
+        telemetryOut(ADCData, PWM, DIR, POS); //Sends all data through UART
+        DelayMs(12);
+    }
+    return (EXIT_SUCCESS);
+}
+\end{lstlisting}
+\newpage
+Functions.c:
+\begin{lstlisting}
+#include <xc.h>
+#include "Delay.h"
+#include <stdint.h>
+
+#define CalL PORTDbits.RD8
+#define CalH PORTDbits.RD9
+
+extern int ADCHighestValue[];
+extern int ADCLowestValue[];
+extern int caliFlag;
+
+extern float kp;
+extern float ki;
+extern float kd;
+extern int initialPwm;
+extern int maxPwm;
+extern int dir;
+
+extern float sensorPos;
+extern float sensorProp;
+extern float sensorInt;
+extern float sensorDer;
+extern float sensorLastProp;
+extern float sensorError;
+extern int adjustedPWM[2];
+
+int calLFlag = 0;
+int calHFlag = 0;
+
+void dec_to_str(char* str, int val, size_t digits) {
+    size_t i = 1u;
+    for (; i <= digits; i++) {
+        str[digits - i] = (char) ((val % 10u) + '0');
+        val /= 10u;
+    }
+    str[i - 1u] = '\0'; // assuming you want null terminated strings?
+}
+
+void initPWM() {
+    int sysClk = 80000000;
+    int pwmFreq = 1000;
+    int prescaleV = 1;
+    int dutyCycle = 0;
+
+    OC2CON = 0x0000;
+    OC2R = 0x00638000;
+    OC2RS = 0x00638000;
+    OC2CON = 0x0006;
+    T2CONSET = 0x0008;
+    PR2 = (sysClk / (pwmFreq * 2) * prescaleV) - 1;
+    OC2RS = (PR2 + 1)*((float) dutyCycle / 100);
+    
+    T2CONSET = 0x8000;
+    OC2CONSET = 0x8020;
+
+    OC4CON = 0x0000;
+    OC4R = 0x00638000;
+    OC4RS = 0x00638000;
+    OC4CON = 0x0006;
+    T4CONSET = 0x0008;
+    PR4 = (sysClk / (pwmFreq * 2) * prescaleV) - 1;
+    OC4RS = (PR4 + 1)*((float) dutyCycle / 100);
+    
+    T4CONSET = 0x8000;
+    OC4CONSET = 0x8020;
+    
+}
+
+void adjustDuty(int channel, int duty) {
+    switch (channel) {
+        case 1:
+            OC2RS = (PR2 + 1)*((float) duty / 100);
+            break;
+        case 2:
+            OC4RS = (PR4 + 1)*((float) duty / 100);
+            break;
+    }
+}
+
+void telemetryOut(int* ADCData, int* PWM, int* DIR, int* POS) {
+    char str[4u + 1u];
+    int i = 0;
+
+    /* TRANSMISSION START */
+    UART1Write("A|");
+    
+    dec_to_str(str, POS[0], 4u);
+    UART1Write(str);
+    UART1Write("|");
+    if(DIR[0] == 0) UART1Write("0");
+    else UART1Write("1");
+    UART1Write("|");
+    if(DIR[0] == 0) UART1Write("1");
+    else UART1Write("0");
+    UART1Write("|");
+    dec_to_str(str, PWM[0], 3u);
+    UART1Write(str);
+    UART1Write("|");
+    
+    dec_to_str(str, POS[1], 4u);
+    UART1Write(str);
+    UART1Write("|");
+    if(DIR[1] == 0) UART1Write("0");
+    else UART1Write("1");
+    UART1Write("|");
+    if(DIR[1] == 0) UART1Write("1");
+    else UART1Write("0");
+    UART1Write("|");
+    dec_to_str(str, PWM[1], 3u);
+    UART1Write(str);
+    UART1Write("|");
+    
+    for (i = 0; i < 6; i++) {
+        dec_to_str(str, ADCData[i], 4u);
+        UART1Write(str);
+        UART1Write("|");
+    }
+    dec_to_str(str, ADCData[6], 4u);
+    UART1Write(str);
+    
+    UART1WriteLn("|Z");
+    /* TRANSMISSION END */
+}
+
+//Checks for calibration, if not, calibrate
+void checkCalState(int* adc)
+{
+    int i;
+    int j;
+    int tempRead;
+    if(CalL < 1){
+       for(i = 0;i<10;i++){
+           for(j = 0;j<7;j++){
+               tempRead = analogRead(adc[j]);
+               if(tempRead < ADCLowestValue[j])
+                   ADCLowestValue[j] = tempRead;
+           }
+       }
+       calLFlag = 1;
+    }
+    if(CalH < 1){
+       for(i = 0;i<10;i++){
+           for(j = 0;j<7;j++){
+               tempRead = analogRead(adc[j]);
+               if(tempRead > ADCHighestValue[j])
+                   ADCHighestValue[j] = tempRead;
+           }
+       }
+       calHFlag = 1;
+    }
+    if(caliFlag != 1){
+        if(calLFlag == 1 && calHFlag == 1) {
+            DelayMs(1500);
+            caliFlag = 1;
+        }
+    }
+}
+
+void PID(int sensorMean, int sensorSum)
+{
+    int PWM[] = {0,0};
+    if(sensorSum > 0) //As long as there is at least one sensor active
+    {
+        sensorPos = sensorMean/sensorSum; //Position of the line on the sensorarray
+        sensorProp = sensorPos - 3;  //Proportional part, position minus middle sensor position
+        sensorInt = sensorInt + sensorProp; //Integral part
+        if(sensorInt > 100) //Makes sure Integral is not too large, reduces time to adjust
+            sensorInt = 100;  
+        if(sensorInt < -100)
+            sensorInt = -100;
+        sensorDer = sensorProp - sensorLastProp; //Derivative part
+        sensorError = (sensorProp * kp)+(sensorInt*ki)+(sensorDer*kd); //PID calculation
+        sensorLastProp = sensorProp; //Saves proportional for next derivative
+        if(sensorError < -(initialPwm)) //Sets an upper cap for adjustment
+            sensorError = -(initialPwm);
+        if(sensorError > (initialPwm))
+            sensorError = (initialPwm);
+        if(sensorError<0){
+            PWM[1] = initialPwm+sensorError; //Decrease right motor, sensorError is negative here
+            PWM[0] = initialPwm-sensorError; //Increase left motor
+            dir = 1; //turn right
+        }
+        else if(sensorError>0){
+            PWM[1] = initialPwm+sensorError;
+            PWM[0] = initialPwm-sensorError; 
+            dir = 0; //turn left
+        }
+        else{
+            PWM[0] = initialPwm;
+            PWM[1] = initialPwm;
+            dir = 2;
+        }
+    }
+    else
+    {
+        PWM[0] = adjustedPWM[0];
+        PWM[1] = adjustedPWM[1];
+    }
+    adjustedPWM[0] = PWM[0];
+    adjustedPWM[1] = PWM[1];
+}
+\end{lstlisting}
+\newpage
+UART.c:
+\begin{lstlisting}
+#include <xc.h>
+
+extern void UART1Init(int baudrate, int stopBit) {
+    if (U1STAbits.OERR != 0) {              // Check recieve buffer for overflow
+        U1STAbits.OERR = 0;                 // Reset flag if set
+    }
+    
+    TRISBbits.TRISB4 = 0;                   // Set B4 as output
+    U1MODEbits.BRGH = 1;                    // Baudrate generator high mode     
+    U1MODEbits.PDSEL = 0;                   // Parity and data selection bits 8bit, no parity     
+    if (stopBit == 1) {
+        U1MODEbits.STSEL = 0;               // Stopbit set to 1 stopbit     
+    } else {
+        U1MODEbits.STSEL = 1;               // Stopbit set to 2 stopbit     
+    }
+    U1BRG = (40000000 / 4 / baudrate) - 1;  // Set baudrate register     
+    U1STAbits.URXEN = 1;                    // Enable Reciever     
+    U1STAbits.UTXEN = 1;                    // Enable Transmitter     
+    U1MODEbits.ON = 1;                // Turn on USART 
+}
+
+extern char UART1Putc(char c) {
+    while (U1STAbits.UTXBF);                // Waits for trasmit buffer to bet not full
+    U1TXREG = c;                            // Puts contents of C into buffer
+    return c;
+}
+
+extern void UART1WriteLn(char *data) {
+    while (*data) UART1Putc(*data++);
+    UART1Putc('\n');
+}
+\end{lstlisting}
+\newpage
+ADC.c:
+\begin{lstlisting}
+#include <xc.h>
+#include "Delay.h"
+
+extern int analogRead(char CH) {
+    AD1PCFG = ~CH; // PORTB = Digital; RB2 = analog
+    AD1CON1 = 0x0000; // SAMP bit = 0 ends sampling
+    // and starts converting
+    //AD1CHS = 0x00020000; // Connect RB2/AN2 as CH0 input
+    // in this example RB2/AN2 is the input
+    AD1CSSL = 0;
+    AD1CON3 = 0x0001; // Manual Sample, TAD = internal 6 TPB
+    AD1CON2 = 0;
+    AD1CON1SET = 0x8000; // turn on the ADC
+    AD1CHSbits.CH0SA = CH;
+    AD1CON1SET = 0x0002; // start sampling ...
+    DelayUs(2); // for 2 us
+    AD1CON1CLR = 0x0002; // start Converting
+    while (!(AD1CON1 & 0x0001)); // conversion done?
+    return ADC1BUF0;
+}
+\end{lstlisting}

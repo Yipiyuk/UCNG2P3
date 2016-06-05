@@ -1,0 +1,192 @@
+\newpage
+\section{C\# code - interface}
+\begin{lstlisting}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO.Ports;
+
+namespace Line_follower_Telemetry
+{
+    public partial class Main : Form
+    {
+        int[] baudRates = { 2400, 4800, 9600, 19200, 38400, 57600, 115200 };
+        string[] ports = SerialPort.GetPortNames();
+        
+        public delegate void SCDelegate();
+        SerialPort SP = new SerialPort();
+        delegate void printDelegate(string data);
+
+        int VDA = 0, VDB = 0, HDA = 0, HDB = 0;
+
+        int res = 0;
+        int resMin = -3;
+        int resMax = 3;
+        int resPosOffset = 0;
+
+        public Main()
+        {
+            InitializeComponent();
+            for (int i = 0; i < baudRates.Length; i++)
+            {
+                BaudCB.Items.Add(baudRates[i]);
+            }
+            BaudCB.SelectedItem = 115200;
+            PortsCB.Items.AddRange(ports);
+            PortsCB.SelectedIndex = 0;
+            Point resP = ResPositive.PointToScreen(Point.Empty);
+            resPosOffset = resP.X-8;
+            resLabel.Text = resPosOffset.ToString();
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        void testPrint(string data)
+        {
+            RawSerial.Text = data;
+            serialDeconstruct(data);
+            if(data[data.Length - 1] == 'Z')
+            {
+                RawSerial.AppendText("\n");
+            }
+            RawSerial.SelectionStart = RawSerial.Text.Length;
+            RawSerial.ScrollToCaret();
+            
+        }
+
+        private void serialDeconstruct(string data)
+        {
+            string[] dataP = data.Split(new string[] { "|" }, StringSplitOptions.None);
+            if (dataP.Length == 17)
+            {
+                vPWMLabel.Text = dataP[4];
+                if(Convert.ToInt32(dataP[4]) > 0 && Convert.ToInt32(dataP[4]) < 150)
+                {
+                    vPWM.Height = map(Convert.ToInt32(dataP[4]), 0, 100, 150, 0);
+                    backpanel1.BackColor = Color.FromArgb(map(vPWM.Height, 150, 0, 0, 255), map(vPWM.Height, 150, 0, 255, 0), 0);
+                }
+                VDA = Convert.ToInt32(dataP[2]);
+                if (VDA == 1) vDirA.BackColor = Color.Green;
+                else vDirA.BackColor = Color.White;
+                VDB = Convert.ToInt32(dataP[3]);
+                if (VDB == 1) vDirB.BackColor = Color.Green;
+                else vDirB.BackColor = Color.White;
+                hPWMLabel.Text = dataP[8];
+                if(Convert.ToInt32(dataP[8]) > 0 && Convert.ToInt32(dataP[8]) < 150)
+                {
+                    hPWM.Height = map(Convert.ToInt32(dataP[8]), 0, 100, 150, 0);
+                    Backpanel2.BackColor = Color.FromArgb(map(hPWM.Height, 150, 0, 0, 255), map(hPWM.Height, 150, 0, 255, 0), 0);
+                }
+                HDA = Convert.ToInt32(dataP[6]);
+                if (HDA == 1) hDirA.BackColor = Color.Green;
+                else hDirA.BackColor = Color.White;
+                HDB = Convert.ToInt32(dataP[7]);
+                if (HDB == 1) hDirB.BackColor = Color.Green;
+                else hDirB.BackColor = Color.White;
+                Sensor1Label.Text = dataP[9];
+                Sensor1.Height = map(Convert.ToInt32(dataP[9]), 0, 1023, 100, 0);
+                Backpanel3.BackColor = Color.FromArgb(map(Sensor1.Height, 100, 0, 0, 255), map(Sensor1.Height, 100, 0, 255, 0), 0);
+                Sensor2Label.Text = dataP[10];
+                Sensor2.Height = map(Convert.ToInt32(dataP[10]), 0, 1023, 100, 0);
+                Backpanel4.BackColor = Color.FromArgb(map(Sensor2.Height, 100, 0, 0, 255), map(Sensor2.Height, 100, 0, 255, 0), 0);
+                Sensor3Label.Text = dataP[11];
+                Sensor3.Height = map(Convert.ToInt32(dataP[11]), 0, 1023, 100, 0);
+                Backpanel5.BackColor = Color.FromArgb(map(Sensor3.Height, 100, 0, 0, 255), map(Sensor3.Height, 100, 0, 255, 0), 0);
+                Sensor4Label.Text = dataP[12];
+                Sensor4.Height = map(Convert.ToInt32(dataP[12]), 0, 1023, 100, 0);
+                Backpanel6.BackColor = Color.FromArgb(map(Sensor4.Height, 100, 0, 0, 255), map(Sensor4.Height, 100, 0, 255, 0), 0);
+                Sensor5Label.Text = dataP[13];
+                Sensor5.Height = map(Convert.ToInt32(dataP[13]), 0, 1023, 100, 0);
+                Backpanel7.BackColor = Color.FromArgb(map(Sensor5.Height, 100, 0, 0, 255), map(Sensor5.Height, 100, 0, 255, 0), 0);
+                Sensor6Label.Text = dataP[14];
+                Sensor6.Height = map(Convert.ToInt32(dataP[14]), 0, 1023, 100, 0);
+                Backpanel8.BackColor = Color.FromArgb(map(Sensor6.Height, 100, 0, 0, 255), map(Sensor6.Height, 100, 0, 255, 0), 0);
+                Sensor7Label.Text = dataP[15];
+                Sensor7.Height = map(Convert.ToInt32(dataP[15]), 0, 1023, 100, 0);
+                Backpanel9.BackColor = Color.FromArgb(map(Sensor7.Height, 100, 0, 0, 255), map(Sensor7.Height, 100, 0, 255, 0), 0);
+                res = Convert.ToInt32(dataP[5]);
+                resLabel.Text = res.ToString();
+                if (res < 0 && res >= resMin)
+                {
+                    ResBack.BackColor = Color.FromArgb(map(res, resMin, 0, 255, 0), map(res, resMin, 0, 0, 255), 0);
+                    ResNegative.Width = map(res, 0, resMin, 248, 0);
+                } else if (res > 0 && res <= resMax)
+                {
+                    ResBack.BackColor = Color.FromArgb(map(res, resMax, 0, 255, 0), map(res, resMax, 0, 0, 255), 0);
+                    ResPositive.Width = map(res, 0, resMax, 248, 0);
+                    ResPositive.Left = resPosOffset + ((248 / 3) * res);
+                } else if (res == 0)
+                {
+                    ResPositive.Width = 248;
+                    ResNegative.Width = 248;
+                    ResPositive.Left = resPosOffset;
+                }
+            }
+        }
+
+        private void SPPrint(object sender, SerialDataReceivedEventArgs e)
+        {
+
+            SerialPort SP = (SerialPort)sender;
+            printDelegate PD = new printDelegate(testPrint);
+            this.Invoke(PD, SP.ReadLine());
+        }
+
+        private void SPSPrint(object sender, RTSerialCom.DataStreamEventArgs e)
+        {
+            RTSerialCom.SerialClient SPS = (RTSerialCom.SerialClient)sender;
+            printDelegate PD = new printDelegate(testPrint);
+            byte[] ByteArray = new byte[18];
+            SPS.Receive(ByteArray, 0, ByteArray.Length);
+            string data = System.Text.Encoding.Default.GetString(ByteArray);
+            this.Invoke(PD, data);
+        }
+
+        public void SerialClose()
+        {
+            SP.DiscardInBuffer();
+            SP.DiscardOutBuffer();
+            SP.Close();
+            SP.DataReceived -= new SerialDataReceivedEventHandler(SPPrint);
+            ConBot.Text = "Connect";
+        }
+
+        private int map(int x, int in_min, int in_max, int out_min, int out_max)
+        {
+            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+
+        private void ConBot_Click_1(object sender, EventArgs e)
+        {
+            if (SP.IsOpen)
+            {
+                BeginInvoke(new SCDelegate(SerialClose));
+            }
+            else
+            {
+                if (BaudCB.SelectedItem == null || PortsCB.SelectedItem == null)
+                {
+                    RawSerial.Text = "Parameters not set!";
+                }
+                else
+                {
+                    SP.BaudRate = (int)(BaudCB.SelectedItem);
+                    SP.PortName = PortsCB.SelectedItem.ToString();
+                    SP.Open();
+                    SP.DataReceived += new SerialDataReceivedEventHandler(SPPrint);
+                    ConBot.Text = "Disconnect";
+                    RawSerial.Clear();
+                }
+            }
+        }
+    }
+\end{lstlisting}
