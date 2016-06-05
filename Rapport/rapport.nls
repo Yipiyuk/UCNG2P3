@@ -1,16 +1,20 @@
 \begin{thenomenclature} 
 
  \nomgroup{A}
-\item [{PNP}]\begingroup Positive-negative-positive\nomeqref {0}\nompageref{1}
-\item [{NPN}]\begingroup Negative-positive-negative\nomeqref {0}\nompageref{1}
-  \item [{ADC}]\begingroup Analog-digital conversion\nomeqref {0}\nompageref{1}
-  \item [{PID}]\begingroup Proportional-integral-derivative controller\nomeqref {0}
+
+  \item [{3D print}]\begingroup 3-Dimensional printing\nomeqref {0}
 		\nompageref{1}
-  \item [{THT}]\begingroup Through-hole-technology\nomeqref {0}\nompageref{1}
-  \item [{3D\\ print}]\begingroup Printing something in 3 dimensions\nomeqref {0}
+  \item [{ADC}]\begingroup Analog-digital conversion\nomeqref {0}
+		\nompageref{1}
+  \item [{GUI}]\begingroup Graphical User Interface\nomeqref {0}
+		\nompageref{1}
+  \item [{IDE}]\begingroup Integrated Development Environment\nomeqref {0}
+		\nompageref{1}
+  \item [{PID}]\begingroup Proportional-integral-derivative\nomeqref {0}
 		\nompageref{1}
   \item [{PWM}]\begingroup Pulse-width modulation\nomeqref {0}
 		\nompageref{1}
- \item [{MCU}]\begingroup Micro controller unit\nomeqref {0}\nompageref{1}
+  \item [{THT}]\begingroup Through-hole-technology\nomeqref {0}
+		\nompageref{1}
 
 \end{thenomenclature}
