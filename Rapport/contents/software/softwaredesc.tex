@@ -58,7 +58,7 @@ If the proportional gain is too high, the system can become unstable. Contrarily
 
 \subsection {Steady-state error}
 
-When looking at figure 3.2 the reference point is the blue line and the feedback line is the green, the two lines merge up and the steady-state is achieved. When the lines don't merge, but the feedback line is slightly above or under the reference point. This steady-state error can be minimized by adjusting the proportional and integral term. 
+When looking at figure 3.2 the reference point is the blue line and the feedback line is the green, the two lines merge up and the steady-state is achieved. When the lines don't merge and the feedback line is slightly above or under the reference point there is a steady-state error. This steady-state error can be minimized by adjusting the proportional and integral term. 
 
 \subsection {Integral control(I)}
 
@@ -213,7 +213,8 @@ This expression can be simplified where $y_\mathrm{min}=0$ as $\overline{y}=D \c
 
 \subsection{Duty cycles}
 The duty cycle describes the proportion of 'on' compared to any given period of runtime for the device. The duty cycle is described as a percentage, where 100\% means that it's turned on the entire time, where 10\% would be a tenth of the time.\\
-$${D}=\frac{T}{P} \cdot 100$$
+$${D}=\frac{T}{P} \cdot 100\%$$ 
+
 \begin{enumerate}
 \item[•]Where {\textbf{D}} is the duty cycle. 
 \item[•]{\textbf{T}} is the time the signal is active.
@@ -236,6 +237,6 @@ The GUI has controls to set the COM-port as well as the baud rate, and a button 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.5\textwidth]{figures/guiexample.png}  
-\caption{Screenshot of the C\#  TBD GUI used to monitor the sensor readings.}  
+\caption{Screenshot of the C\# GUI used to monitor the input readings.}  
   \label{The GUI}
 \end{figure}
