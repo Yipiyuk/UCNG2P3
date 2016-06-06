@@ -1,25 +1,110 @@
-\section{Testing round 1}
-
-\subsection{Test description}
 To make sure the product as a whole is working according to plan, testing must be done. First the components must be tested, this is done individually for each component to make sure there are no errors or fails when the product is built. The purpose of integration testing is to detect any inconsistencies between the software units that are integrated together. Testing is also done to watch the behavior of the product and tweak it.
 
-\subsection{Unit Testing}
-TBD testing af individuelle dele
-Sensor
-Motor
-H-Bro
-PWM
+\section{Unit Testing}
+The individual parts of the system will be tested in the following section
+\subsection{Sensor}
+The following test is to make sure that the selected sensors work as intended for the project.
 
-\subsection{Integration Testing}
+\subsubsection{Equipment}
+\begin{enumerate}
+    \item[•]Hameg HM8040-2 Triple Power Supply
+	\item[•]Fluke 45 Multimeter
+\end{enumerate}
+
+\subsubsection{Setup}
+Sensor is powered through the robot.
+Output from sensor is measured with multimeter.
+
+\subsubsection{Results}
+\textbf{White Surface:}
+Average voltage measured: 230 mV\newline
+\textbf{Black Surface:}
+Average voltage measured: 2,6 V\newline
+This shows that the sensor clearly measures a difference between light and dark surfaces, making it ideal for this application.
+
+\subsection{DC Motors}
+The following test is to make sure that the DC motors work as intended.
+
+\subsubsection{Equipment}
+\begin{enumerate}
+	\item[•]Hameg HM8040-2 Triple Power Supply
+	\item[•]Fluke 45 Multimeter
+\end{enumerate}
+
+\subsection{Setup}
+The motor is powered through the power supply.
+Amount of drawn current is measured with multimeter.
+
+\subsubsection{Results}
+Both motors have been measured at 6 V and show a steady current draw of 0,11 A when running freely.
+
+
+\subsection{H-Bridge}
+The following test is to make sure the H-bridge works as intended.
+
+\subsubsection{Equipment}
+\begin{enumerate}
+	\item[•]Hameg HM8040-2 Triple Power Supply
+	\item[•]Fluke 45 Multimeter
+	\item[•]Agilent Technologies InfiniiVision MSO-X 3024A Mixed Signal Oscilloscope.
+\end{enumerate}
+
+\subsubsection{Setup}
+H-Bridge is powered by the power supply.
+PWM and duty cycle is controlled by the function generator in the Oscilloscope.
+Output is measured with the multimeter.
+H-bridge motor direction is controlled manually.
+
+\subsubsection{Results}
+\textbf{Direction: 0}
+\begin{enumerate}
+	\item[•]\textbf{Duty Cycle 20\%:} 1,76 V measured
+	\item[•]\textbf{Duty Cycle 50\%:} 2,74 V measured
+	\item[•]\textbf{Duty Cycle 80\%:} 3,58 V measured
+\end{enumerate}
+
+\textbf{Direction: 1}
+\begin{enumerate}
+	\item[•]\textbf{Duty Cycle 20\%:} -1,57 V measured
+	\item[•]\textbf{Duty Cycle 50\%:} -2,55 V measured
+	\item[•]\textbf{Duty Cycle 80\%:} -3,50 V measured
+\end{enumerate}
+
+The results show that the H-Bridge unit is capaple of controlling the voltage output in both directions, with the output voltage level controlled by the PWM signal applied to the unit.
+
+
+\subsection{PWM}
+This test is to measure the PWM capability of the PIC32MX320F128H as well to see is the software implementation is capable of controlling the PWM module of the MCU.
+
+\subsubsection{Equipment}
+\begin{enumerate}
+	\item[•]Agilent Technologies InfiniiVision MSO-X 3024A Mixed Signal Oscilloscope.
+	\item[•]chipKIT Uno32 with PICkit 3 programmer.
+\end{enumerate}
+
+\subsubsection{Setup}
+
+\subsubsection{Results}
+
+\subsection{ADC}
+
+\subsubsection{Equipment}
+
+\subsubsection{Setup}
+
+\subsubsection{Results}
+
+
+\section{Integration Testing}
 TBD testing af interfacet og evt samarbejde mellem enkelte dele
 Interface
 PWM - motor
 
-\subsection{System Testing}
+\section{System Testing}
 TBD testing af systemet som helhed
 Sensor - motor
 
-\subsection{Acceptance Testing}
+\section{Acceptance Testing}
 TBD testing af systemet som helhed. Acceptabel ydeevne?
 Kan den klare banen? 
 Evt. referer til video
