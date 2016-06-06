@@ -12,13 +12,15 @@
 		\nompageref{1}
   \item [{MCU}]\begingroup Microcontroller Unit\nomeqref {0}
 		\nompageref{1}
-		  \item [{BPS}]\begingroup Bits per second\nomeqref {0}
-		\nompageref{1}
   \item [{PID}]\begingroup Proportional-integral-derivative\nomeqref {0}
 		\nompageref{1}
   \item [{PWM}]\begingroup Pulse-width modulation\nomeqref {0}
 		\nompageref{1}
   \item [{THT}]\begingroup Through-hole-technology\nomeqref {0}
+		\nompageref{1}
+  \item [{UART}]\begingroup Universal Asynchronous Receiver/Transmitter\nomeqref {0}
+		\nompageref{1}
+  \item [{PCB}]\begingroup Printed Circuit Board\nomeqref {0}
 		\nompageref{1}
 
 \end{thenomenclature}
