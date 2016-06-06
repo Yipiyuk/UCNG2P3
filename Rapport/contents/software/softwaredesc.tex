@@ -1,6 +1,6 @@
 
 The following section will introduce the software segment, based on the required specifications. The design will be shown in the form of a flowchart.
-The section consists of the PID controller and the Pulse width modulator.
+The section consists of the PID controller and the Pulse width modulator as well as showing the ADC initialization.
 
 \subsection{Software diagram}
 
@@ -205,9 +205,9 @@ This part of the code handles the total PID value as well as limiting this value
 \end{lstlisting}
 The final part of the PID function handles the duty cycle sent to the motors. If sensorError is less than 0, the robot needs to turn right, increasing motor power on the left while decreasing motor power on the right. If sensorError is positive, do the opposite. If sensorError is exactly 0, the duty cycle will remain what it was last iteration, which is a very rare case.
 \newpage
-\section{Pulse width modulator - PWM}
+\section{Pulse-width modulation}
 
-A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\\
+A pulse-width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\\
 The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state.
 Pulse-width modulation utilizes a square-wave signal, where the width of the pulse is modulated to get the variation in the average value of the waveform.\\ Given the pulse waveform $f(t)$ over the period $T$, low value $y_\mathrm{min}$ and high value $y_\mathrm{high}$ and duty cycle $D$, the average waveform is given by: \\
 
