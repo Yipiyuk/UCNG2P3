@@ -10,7 +10,6 @@ The section consists of the PID controller and the Pulse width modulator.
 \caption{Software flowchart}  
   \label{Softwareflowchart}
 \end{figure}
-TBD
 
 \newpage
 \section{Analog to digital conversion}
@@ -32,7 +31,7 @@ extern int analogRead(char CH) {
     return ADC1BUF0; //Returns content of the buffer	
 }
 \end{lstlisting}
-The software code is showing how the ADC is converting analog to digital for the product.
+The software code shows how the ADC is converting analog to digital signals for the product.
 \newpage
 
 \section{PID controller} 
@@ -119,7 +118,7 @@ In figure 3.2 the reference point is the blue line. The goal is to make the line
 
 If the parameters of the PID controller are set incorrectly the process input can become unstable.
 This means the controllers output becomes divergent, which can be limited by saturation and mechanical breaking. \\
-
+\newpage
 \subsection {Manual tuning} 
 When a system must be online at all times, a method for tuning is to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, and then reduce $K_p$ by 10-20\%.\\
 Then set $K_d$ to about 100 times the value of $K_p$ and increase or decrease until the oscillation occurs, then reduce $K_d$ by 10-20\%.\\
@@ -152,7 +151,7 @@ Table \ref{Table: Manual tuning} gives an informative overview of what the diffe
 		\item[•]To eliminate the steady-state error, increase $K_i$
 		\item[•]To reduce the overshoot and settling time, decrease $K_d$
 	\end{enumerate}
-	
+\newpage
 \subsection{PID Implementation}
 In the following example, the PID constants are global variables, and therefore not part of the described function. The values are as follows: kp = 8.5, ki = 0.01, kd = 850.
 \begin{lstlisting}
@@ -181,7 +180,7 @@ The PID function has two parameters, sensorMean and sensorSum. These are used to
 			sensorError = (initialPwm);
 \end{lstlisting}
 This part of the code handles the total PID value as well as limiting this value. First of all, it multiplies the previous PID values by their constants and adding these numbers together and then saves the proportional value to be handled by the derivative part next time. At the end, sensorError is limited to the maximum speed of the motors, to make future calculations easier.
-
+\newpage
 \begin{lstlisting}
 		if(sensorError<0)
 		{
@@ -205,7 +204,7 @@ This part of the code handles the total PID value as well as limiting this value
 }
 \end{lstlisting}
 The final part of the PID function handles the duty cycle sent to the motors. If sensorError is less than 0, the robot needs to turn right, increasing motor power on the left while decreasing motor power on the right. If sensorError is positive, do the opposite. If sensorError is exactly 0, the duty cycle will remain what it was last iteration, which is a very rare case.
-
+\newpage
 \section{Pulse width modulator - PWM}
 
 A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\\
