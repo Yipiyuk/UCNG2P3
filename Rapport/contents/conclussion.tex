@@ -1,1 +1,9 @@
-TBD Konklusion
+The goal of this project was to make robot that could follow a black line by utilizing sensors and feedback control algorithms.
+\\\\
+During the project, a higher understanding of the workings of systems such as PID, ADC and PWM, and how they can be implemented in hardware and software was achieved. 
+The solution was designed around the Magician Chassis and chipKIT Uno32 MCU Board. 
+C code for the MCU has been made and implements the required systems: PID, ADC and PWM. Furthermore, an interface has been developed in C\#, that receives data through Bluetooth that the robot transmits through a BlueSMiRF Silver module.
+\\\\
+During the process, several problems occurred, most severe issues with the implementation of the PID algorithm. The algorithm was at first implemented wrong, adding in the derivative part instead of subtracting. This lead to a serious increase in time taken to tune the algorithm.\\
+Furthermore, the first iteration of the robot included a homemade motor shield, which turned out to be faulty.\\
+The product development ended in a success, resulting in a working robot that is able to navigate a line following track using the developed PID algorithm. 
