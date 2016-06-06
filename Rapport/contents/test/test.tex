@@ -31,7 +31,7 @@ The following test is to make sure that the DC motors work as intended.
 	\item[•]Fluke 45 Multimeter
 \end{enumerate}
 
-\subsection{Setup}
+\subsubsection{Setup}
 The motor is powered through the power supply.
 Amount of drawn current is measured with multimeter.
 
@@ -46,7 +46,7 @@ The following test is to make sure the H-bridge works as intended.
 \begin{enumerate}
 	\item[•]Hameg HM8040-2 Triple Power Supply
 	\item[•]Fluke 45 Multimeter
-	\item[•]Agilent Technologies InfiniiVision MSO-X 3024A Mixed Signal Oscilloscope.
+	\item[•]Agilent MSO-X 3024A Oscilloscope.
 \end{enumerate}
 
 \subsubsection{Setup}
@@ -58,47 +58,108 @@ H-bridge motor direction is controlled manually.
 \subsubsection{Results}
 \textbf{Direction: 0}
 \begin{enumerate}
-	\item[•]\textbf{Duty Cycle 20\%:} 1,76 V measured
-	\item[•]\textbf{Duty Cycle 50\%:} 2,74 V measured
-	\item[•]\textbf{Duty Cycle 80\%:} 3,58 V measured
+	\item[•]\textbf{Duty Cycle 20\%:} 1,76 V measured.
+	\item[•]\textbf{Duty Cycle 50\%:} 2,74 V measured.
+	\item[•]\textbf{Duty Cycle 80\%:} 3,58 V measured.
 \end{enumerate}
 
 \textbf{Direction: 1}
 \begin{enumerate}
-	\item[•]\textbf{Duty Cycle 20\%:} -1,57 V measured
-	\item[•]\textbf{Duty Cycle 50\%:} -2,55 V measured
-	\item[•]\textbf{Duty Cycle 80\%:} -3,50 V measured
+	\item[•]\textbf{Duty Cycle 20\%:} -1,57 V measured.
+	\item[•]\textbf{Duty Cycle 50\%:} -2,55 V measured.
+	\item[•]\textbf{Duty Cycle 80\%:} -3,50 V measured.
 \end{enumerate}
 
 The results show that the H-Bridge unit is capaple of controlling the voltage output in both directions, with the output voltage level controlled by the PWM signal applied to the unit.
-
 
 \subsection{PWM}
 This test is to measure the PWM capability of the PIC32MX320F128H as well to see is the software implementation is capable of controlling the PWM module of the MCU.
 
 \subsubsection{Equipment}
 \begin{enumerate}
-	\item[•]Agilent Technologies InfiniiVision MSO-X 3024A Mixed Signal Oscilloscope.
+	\item[•]Agilent MSO-X 3024A Oscilloscope.
 	\item[•]chipKIT Uno32 with PICkit 3 programmer.
 \end{enumerate}
 
 \subsubsection{Setup}
+The Uno32 board is programmed to run the PWM at different frequencies and duty cycles.
+Output is measured with the Oscilloscope.
 
 \subsubsection{Results}
+The test shows that the PWM module and developed software is working as intended.
+\img{figures/f1000d20.png}{Output with 1000 Hz frequency and 20\% Duty Cycle}{f1000d20}{0.7}
+\img{figures/f1000d50.png}{Output with 1000 Hz frequency and 50\% Duty Cycle}{f1000d50}{0.7}
+\img{figures/f1000d80.png}{Output with 1000 Hz frequency and 80\% Duty Cycle}{f1000d80}{0.7}
+\img{figures/f10000d50.png}{Output with 10000 Hz frequency and 50\% Duty Cycle}{f10000d50}{0.7}\newpage
 
 \subsection{ADC}
+This test is to show that the ADC module and the developed software for the module is working as intended.
 
 \subsubsection{Equipment}
+\begin{enumerate}
+	\item[•]Hameg HM8040-2 Triple Power Supply.
+	\item[•]chipKIT Uno32 with PICkit 3 programmer in debug mode.
+\end{enumerate}
 
 \subsubsection{Setup}
+The Uno32 is powered from the PICkit 3 programmer in debug mode to read the contents of a variabel containing the output of the ADC module.
+The input voltage on the ADC is supplied by the power supply.
 
 \subsubsection{Results}
-
+\begin{enumerate}
+	\item[•] \textbf{PS:} 0,499V - \textbf{Measured:} 163 (0,526V) - \textbf{Error:} 5,3\%
+	\item[•] \textbf{PS:} 1,000V - \textbf{Measured:} 331 (1,068V) - \textbf{Error:} 6,7\%
+	\item[•] \textbf{PS:} 2,006V - \textbf{Measured:} 665 (2,145V) - \textbf{Error:} 6,4\%
+	\item[•] \textbf{PS:} 3,299V - \textbf{Measured:} 1023 (3,300V) - \textbf{Error:} 0,03\%
+\end{enumerate}
+This shows that the ADC and the developed software works within the required area for the application.
 
 \section{Integration Testing}
 TBD testing af interfacet og evt samarbejde mellem enkelte dele
-Interface
-PWM - motor
+
+\subsection{PWM motor control}
+The following test is to show that the DC motors can be controlled by the H-bridge unit.
+
+\subsubsection{Equipment}
+\begin{enumerate}
+	\item[•]Hameg HM8040-2 Triple Power Supply.
+	\item[•]chipKIT Uno32 with PICkit 3 programmer.
+\end{enumerate}
+
+\subsubsection{Setup}
+	The H-bridge module is powered from the power supply.
+	The control signals is controlled by the Uno32 board.
+
+\subsubsection{Results}
+\begin{enumerate}
+	\item[•]\textbf{PWM: 20\%:} Motors are not turning. Audible whine.
+	\item[•]\textbf{PWM: 30\%:} Motors are not turning. Higher audible whine.
+	\item[•]\textbf{PWM: 37\%:} Motors are turning slowly with assisted start.
+	\item[•]\textbf{PWM: 40\%:} Motors are turning slowly.
+	\item[•]\textbf{PWM: 100\%:} Motors are turning maximum speed.
+\end{enumerate}
+This shows that we the current setup of Motors and H-bridge unit, the variable control span is between an duty cycle of 37\% and 100\%.
+
+\subsection{Robot to Interface communication}
+This test is to show that the system is capable of transmitting current data from the robot to the interface and accurately show it to the user.
+
+\subsubsection{Equipment}
+\begin{enumerate}
+	\item[•]chipKIT Uno32 with PICkit 3 programmer.
+	\item[•]BlueSMIRF silver Bluetooth module.
+	\item[•]PC running C# interface.
+\end{enumerate}
+
+\subsubsection{Setup}
+The robot is placed so that the sensors measures over a white and a black surface.
+data is sent over bluetooth to the interface and data recorded.
+
+\subsubsection{Results}
+\textbf{Sensors on white surface}
+\img{figures/sensorsonwhite.png}{Interface showing data sent with sensors placed over white surface}{guisensorsonwhite}{0.8}
+
+\textbf{Sensors on black surface}
+\img{figures/sensorsonblack.png}{Interface showing data sent with sensors placed over black surface}{guisensorsonblack}{0.8}
 
 \section{System Testing}
 TBD testing af systemet som helhed
