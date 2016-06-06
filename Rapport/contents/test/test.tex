@@ -147,7 +147,7 @@ This test is to show that the system is capable of transmitting current data fro
 \begin{enumerate}
 	\item[•]chipKIT Uno32 with PICkit 3 programmer.
 	\item[•]BlueSMIRF silver Bluetooth module.
-	\item[•]PC running C# interface.
+	\item[•]PC running C\# interface.
 \end{enumerate}
 
 \subsubsection{Setup}
@@ -155,15 +155,29 @@ The robot is placed so that the sensors measures over a white and a black surfac
 data is sent over bluetooth to the interface and data recorded.
 
 \subsubsection{Results}
-\textbf{Sensors on white surface}
-\img{figures/sensorsonwhite.png}{Interface showing data sent with sensors placed over white surface}{guisensorsonwhite}{0.8}
-
-\textbf{Sensors on black surface}
-\img{figures/sensorsonblack.png}{Interface showing data sent with sensors placed over black surface}{guisensorsonblack}{0.8}
+\sidebyimg{figures/sensorsonwhite.png}{Interface showing data sent with sensors placed over white surface}{figures/sensorsonblack.png}{Interface showing data sent with sensors placed over black surface}
 
 \section{System Testing}
-TBD testing af systemet som helhed
-Sensor - motor
+This test is to show that the system works as intended.
+
+\subsubsection{Equipment}
+\begin{enumerate}
+	\item[•]chipKIT Uno32 with PICkit 3 programmer.
+	\item[•]BlueSMIRF silver Bluetooth module.
+	\item[•]PC running C\# interface.
+\end{enumerate}
+
+\subsubsection{setup}
+The system is tested by placing the robot in 3 different situations.
+\begin{enumerate}
+	\item[•]Centered on line.
+	\item[•]Line at the right end of sensor array.
+	\item[•]Line at the left end of sensor array.
+\end{enumerate}
+
+\subsubsection{Results}
+\img{figures/interfacestraight.png}{Only the middle sensor is detecting the line}{interfacestraight}{0.5}
+\sidebyimg{figures/interfaceleftturn.png}{Sensor on the left detects line, initiate left turn}{figures/interfacerightturn.png}{Sensor on the right detects line, initiate right turn}
 
 \section{Acceptance Testing}
 TBD testing af systemet som helhed. Acceptabel ydeevne?
