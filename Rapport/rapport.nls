@@ -12,6 +12,8 @@
 		\nompageref{1}
   \item [{MCU}]\begingroup Microcontroller Unit\nomeqref {0}
 		\nompageref{1}
+		  \item [{BPS}]\begingroup Bits per second\nomeqref {0}
+		\nompageref{1}
   \item [{PID}]\begingroup Proportional-integral-derivative\nomeqref {0}
 		\nompageref{1}
   \item [{PWM}]\begingroup Pulse-width modulation\nomeqref {0}
