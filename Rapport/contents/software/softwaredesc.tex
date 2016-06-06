@@ -18,10 +18,10 @@ TBD
 
 \begin{lstlisting}
 extern int analogRead(char CH) {
-    AD1PCFG = ~CH; // PORTB = Digital; RB2 = analog
+    AD1PCFG = ~CH;
     AD1CON1 = 0x0000; //AMP bit = 0 ends sampling and starts converting
     AD1CSSL = 0; //Input scan select, not used
-    AD1CON3 = 0x0001; //Manual Sample, TAD = internal 6 TPB
+    AD1CON3 = 0x0001; //Manual Sample, TAD = internal 4 TPB
     AD1CON2 = 0; //No scanning, interrupt at completion of each sample, one 16-word buffer
     AD1CON1SET = 0x8000; //Turn on the ADC
     AD1CHSbits.CH0SA = CH;
@@ -32,8 +32,7 @@ extern int analogRead(char CH) {
     return ADC1BUF0; //Returns content of the buffer	
 }
 \end{lstlisting}
-The software code is showing how the ADC is converting analog to digital for the product. TBD beskriv koden med registre
-
+The software code is showing how the ADC is converting analog to digital for the product.
 \newpage
 
 \section{PID controller} 
@@ -210,8 +209,8 @@ The final part of the PID function handles the duty cycle sent to the motors. If
 \section{Pulse width modulator - PWM}
 
 A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\\
-The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average output is easily altered by changing the proportions between the on and off state. The longer the switch is set to on compared to off, the higher the average supply will be.\\
-Pulse-width modulation utilizes a rectangular pulse where the width of the pulse is modulated to get the variation in the average value of the waveform.\\ Given the pulse waveform $f(t)$ over the period $T$, low value $y_\mathrm{min}$ and high value $y_\mathrm{high}$ and duty cycle $D$, the average waveform is given by: \\
+The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state.
+Pulse-width modulation utilizes a square-wave signal, where the width of the pulse is modulated to get the variation in the average value of the waveform.\\ Given the pulse waveform $f(t)$ over the period $T$, low value $y_\mathrm{min}$ and high value $y_\mathrm{high}$ and duty cycle $D$, the average waveform is given by: \\
 
 $$\overline{y}=\frac{1}{T}\int_{0}^{T}f(t)dt$$\
 
