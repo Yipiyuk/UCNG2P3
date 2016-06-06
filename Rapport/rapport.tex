@@ -31,7 +31,8 @@
 
 %numbers the pages with Arabic numeral - starts from 1.
 \mainmatter
-
+\chapter{Introduction}
+\input{contents/formalities/Introduction.tex}
 \chapter{Requirements specification}
 \input{contents/reqspec.tex}
 \chapter{Hardware section}
@@ -39,7 +40,7 @@
 \input{contents/hardware/hardwaredesc.tex}
 \input{contents/hardware/partconclusion.tex}
 \chapter{Software section}
-\input{contents/software/softwarespec.tex}
+%\input{contents/software/softwarespec.tex}
 \input{contents/software/softwaredesc.tex}
 \input{contents/software/partconclusion.tex}
 \chapter{Test}
@@ -50,6 +51,9 @@
 \input{contents/appendices/groupcollab.tex}
 \chapter{List of references}
 \input{contents/LOR.tex}
+\chapter{Software appendix}
+\input{contents/appendices/Ccode.tex}
+\input{contents/appendices/Csharpcode.tex}
 \newpage
 \listoffigures
 \addtocontents{lof}{~\hfill\textbf{Page}\par}
