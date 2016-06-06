@@ -13,7 +13,7 @@ The section consists of the PID controller and the Pulse width modulator.
 TBD
 
 \newpage
-\section{Analog to digital conversion (software)}
+\section{Analog to digital conversion}
 
 
 \begin{lstlisting}
@@ -36,9 +36,9 @@ The software code is showing how the ADC is converting analog to digital for the
 
 \newpage
 
-\section {Description of the PID controller} 
+\section{PID controller} 
 A PID controller continuously calculates an error value as the difference to a reference point and measured process variables.\\
-PID is an abbreviation for a proportional-integral-derivative controller, it is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line to follow and the PID will allow the MCU to adjust the power to the motors, to steer accordingly to said reference point.
+PID is an abbreviation for  proportional-integral-derivative, which is a control loop feedback mechanism. The controllers job is to minimize the error value for the given devices running time. In the case of this project the reference point is the line to follow and the PID will allow the MCU to adjust the power to the motors, to steer towards said reference point.
 $$\mathrm{F}(t)=K_p{e(t)} + K_{i}\int_{0}^{t}{e(\tau)}\,{d\tau} + K_{d}\frac{de(t)}{dt}$$
 
 \begin{figure}[h!]
@@ -68,8 +68,6 @@ If the proportional gain is too high, the system can become unstable. Contrarily
   \label{PID controller}
 \end{figure}
 
-\subsection {Steady-state error}
-In figure 3.2 the reference point is the blue line. The goal is to make the lines merge up and the steady-state is achieved. When the lines don't merge and the feedback line is slightly above or under the reference point there is a steady-state error. This steady-state error can be minimized by adjusting the proportional and integral term. 
 
 \newpage
 
@@ -112,7 +110,11 @@ An ideal derivative is not causal, so that implementations of PID controllers in
 \subsection {Loop tuning} 
 Tuning the loop is the term used to describe the adjustments of the PID’s control parameters (proportional band/gain, integral gain/reset, derivative gain/rate) to the optimal values for the given control scheme. \\ Stability is the first requirement; however systems can differ greatly, and different applications may have different requirements and these may even conflict with each other. For example, high speed and high accuracy often cancel each other out, because high speed may cause overshooting, while high accuracy is slow.\\ The ideal realistic behaviour is both as fast as possible, while also having minimum overshoot and oscillation. \\ 
 
-Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing. In this case, there was used manual tuning of the numbers.
+Even though the process seems simple, with only three variables, it can be challenging to achieve, because it must satisfy the criteria despite being within the limitations of PID control. While adjusting the PID can seem conceptually intuitive, and while most PIDs may perform acceptably with default controls, they may very well also have an unsatisfactory performance.\\ This can generally be fixed through optimisation and tuning, either through computer simulations or manual testing.
+
+\subsection {Steady-state error}
+In figure 3.2 the reference point is the blue line. The goal is to make the lines merge up and the steady-state is achieved. When the lines don't merge and the feedback line is slightly above or under the reference point there is a steady-state error. This steady-state error can be minimized by adjusting the proportional and integral term. 
+
 
 \subsection {Stability} 
 
@@ -120,10 +122,9 @@ If the parameters of the PID controller are set incorrectly the process input ca
 This means the controllers output becomes divergent, which can be limited by saturation and mechanical breaking. \\
 
 \subsection {Manual tuning} 
-
-When a system must be online at all times a method for tuning is to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, setting $K_p$ at approximately half the value for a "quarter amplitude decay" type response.\\ 
-Then increase $K_i$ until any set off is corrected in sufficient time for the process. Adding too much $K_i$ will however cause an instability. 
-Finally, increase $K_d$, if required at all, until the loop is acceptably quick to reach its reference after a load disturbance.
+When a system must be online at all times, a method for tuning is to first set $K_i$ and $K_d$ values to zero. Increase $K_p$ until the loop output oscillates, and then reduce $K_p$ by 10-20\%.\\
+Then set $K_d$ to about 100 times the value of $K_p$ and increase or decrease until the oscillation occurs, then reduce $K_d$ by 10-20\%.\\
+If needed, $K_i$ can be set to a very low number, in the case of this project, 0.01. This number is then increased or decreased, to give a fast response time without overshooting.
 \\ 
 A fast PID loop tuning process usually overshoots slightly to reach the reference point faster.\\ 
 But in the case of systems that can't accept overshoot, an over-damped closed-loop system is best suited, which requires $K_p$ setting significantly less than half that of the $K_p$ setting that was causing the oscillation.
@@ -143,9 +144,9 @@ But in the case of systems that can't accept overshoot, an over-damped closed-lo
 \end{tabular}
 \end{table}
 
-\subsubsection {Table 3.1 explained}
+\subsubsection {Table \ref{Table: Manual tuning} explained}
 
-Table 3.1 gives an informative overview of what the different parameters does when tuned manually\footnote{http://saba.kntu.ac.ir/eecd/pcl/download/PIDtutorial.pdf}.
+Table \ref{Table: Manual tuning} gives an informative overview of what the different parameters does when tuned manually\footnote{http://saba.kntu.ac.ir/eecd/pcl/download/PIDtutorial.pdf}.
 
 \begin{enumerate}
 		\item[•]To minimize the rise time, decrease $K_p$
@@ -154,7 +155,7 @@ Table 3.1 gives an informative overview of what the different parameters does wh
 	\end{enumerate}
 	
 \subsection{PID Implementation}
-TBD har ændret sensorAvg til sensorMean, gør dette i koden også
+In the following example, the PID constants are global variables, and therefore not part of the described function. The values are as follows: kp = 8.5, ki = 0.01, kd = 850.
 \begin{lstlisting}
 void PID(int sensorMean, int sensorSum)
 {
@@ -206,7 +207,7 @@ This part of the code handles the total PID value as well as limiting this value
 \end{lstlisting}
 The final part of the PID function handles the duty cycle sent to the motors. If sensorError is less than 0, the robot needs to turn right, increasing motor power on the left while decreasing motor power on the right. If sensorError is positive, do the opposite. If sensorError is exactly 0, the duty cycle will remain what it was last iteration, which is a very rare case.
 
-\section{Description of the Pulse width modulator - PWM}
+\section{Pulse width modulator - PWM}
 
 A pulse width modulation technique used to encode a message into a pulsing signal. Its primary use is to control the power supply of electronic devices - the case of this project; this means the motors.\\
 The average voltage and amplitude output to the motors is altered by rapidly switching between an 'on' and 'off' state. This way, the average output is easily altered by changing the proportions between the on and off state. The longer the switch is set to on compared to off, the higher the average supply will be.\\
@@ -240,7 +241,8 @@ TBD Vores duty cycle
   \label{Duty cycles}
 \end{figure}
 \newpage
-\section{The GUI}
+
+\section{The interface}
 The project utilizes a GUI written in C\# , it shows a graphical representation of the sensor load, as well as which motor is running in accordance to the PID.\
 The GUI has controls to set the COM-port as well as the baud rate, and a button prompt to connect and disconnect the robots blue-tooth transmission. It also features a terminal in the bottom, showing all the data sent from the MCU to the robot.
 
